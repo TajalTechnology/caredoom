@@ -22,6 +22,7 @@ app.use(function (req: any, res: { header: (arg0: string, arg1: string) => void;
 /* ----------------------------------- */
 utils.localService('logger', app);
 utils.localService('mongoose', app);
+utils.middleware('body-parser', app);
 utils.middleware('routes', app);
 
 app.listen(process.env.API_PORT, () => {

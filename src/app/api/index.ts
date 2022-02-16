@@ -10,5 +10,6 @@ const fs = require('fs');
 // });
 
 require('./test')(router);
+require('./form')(router);
 
 module.exports = router;

@@ -17,8 +17,8 @@ export default {
         return app;
     },
 
-    localService: function (_name: string | number, _app: { locals: { [x: string]: any; dirname: string; }; }, _path: string) {
-        _path = _path || _app.locals.dirname + '/common/services/';
+    localService: function (_name: string | number, _app: { locals: { [x: string]: any; dirname: string; }; }) {
+        var _path: string = _app.locals.dirname + '/common/services/';
         return _app.locals[_name] = require(_path + _name).init(_app);
     },
 }

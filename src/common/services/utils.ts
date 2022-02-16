@@ -21,6 +21,13 @@ export default {
         var _path: string = _app.locals.dirname + '/common/services/';
         return _app.locals[_name] = require(_path + _name).init(_app);
     },
+
+    middleware: function middleware(_name: string, _app: any) {
+        var middlewarePath = '../middlewares/';
+        var _path: string = middlewarePath;
+        require(_path + _name)(_app);
+    },
+
 }
 
 

@@ -1,7 +1,7 @@
 var path = require('path');
 module.exports = {
   'instance': false,
-  'init': function(_app) {
+  'init': function(_app: { locals: { appdirname: any; }; }) {
     var label = _app.locals.appdirname;
     var service = __filename.replace(__dirname, '').replace('.js', '');
     service = path.join('../../../common', 'services', service).replace(/\\/g, '/');

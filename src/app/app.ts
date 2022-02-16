@@ -21,3 +21,9 @@ app.use(function (req: any, res: { header: (arg0: string, arg1: string) => void;
 /* Loading pre-required local service */
 /* ----------------------------------- */
 utils.localService('logger', app);
+utils.localService('mongoose', app);
+utils.middleware('routes', app);
+
+app.listen(process.env.API_PORT, () => {
+    return console.log(`Express is listening at http://localhost:${process.env.API_PORT}`);
+});

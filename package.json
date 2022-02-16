@@ -19,9 +19,12 @@
   "homepage": "https://github.com/TajalTechnology/dynamic-form#readme",
   "dependencies": {
     "@types/dotenv-safe": "^8.1.2",
+    "bluebird": "^3.7.2",
     "dotenv": "^16.0.0",
     "dotenv-safe": "^8.2.0",
     "express": "^4.17.2",
+    "http": "^0.0.1-security",
+    "mongoose": "^6.2.1",
     "ts-node-dev": "^1.1.8",
     "winston": "^3.6.0",
     "winston-daily-rotate-file": "^4.6.1"

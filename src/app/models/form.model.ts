@@ -5,6 +5,8 @@ export interface FormDocument extends mongoose.Document {
     username: string;
     email: string;
     password: string;
+    columns:string;
+    extraColumn:any;
 };
 
 /* schema */

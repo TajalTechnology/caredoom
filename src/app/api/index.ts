@@ -11,5 +11,6 @@ const fs = require('fs');
 
 require('./test')(router);
 require('./form')(router);
+require('./column')(router);
 
 module.exports = router;

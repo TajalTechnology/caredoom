@@ -11,27 +11,30 @@ export interface ColumnDocument extends mongoose.Document {
     bDisplay: boolean;
     bDisabled: boolean;
     evaluationFormula: boolean;
+    createdAt:Date,
+    updatedAt:Date
 };
 
 /* schema */
 const columnSchema = new mongoose.Schema(
     {
-        columnName: { type: String, required: true },
-        assignment: { type: String },
-        dataType: {
-            type: String,
-            enum: ['string', 'int', 'boolean'],
-        },
-        maxLength: { type: Number },
-        minLength: { type: Number },
-        bSearch: { type: Boolean },
-        bDisplay: { type: Boolean },
-        bDisabled: { type: Boolean },
-        evaluationFormula: { type: Boolean },
+        formName: { type: String }
+        // columnName: { type: String },
+        // assignment: { type: String },
+        // dataType: {
+        //     type: String,
+        //     enum: ['string', 'int', 'boolean'],
+        // },
+        // maxLength: { type: Number },
+        // minLength: { type: Number },
+        // bSearch: { type: Boolean },
+        // bDisplay: { type: Boolean },
+        // bDisabled: { type: Boolean },
+        // evaluationFormula: { type: Boolean },
     },
     {
         timestamps: true,
-        strict: true,
+        strict: false,
     }
 );
 

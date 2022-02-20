@@ -1,21 +1,25 @@
-import { NextFunction, Request, Response } from "express";
-import { createColumn } from './services/column.service';
-import validation from "../common/middlewares/validation";
-import { createColumnSchema } from '../schemas/column.schema';
 import ColumnModel from "../models/column.model";
 import _responce from "../common/utils/res.message";
+import validation from "../common/middlewares/validation";
+import { NextFunction, Request, Response, Express } from "express";
+import { createColumn, deleteColumns, getAllColumns, getColumn, updatedColumns } from './services/column.service';
+import { createColumnSchema, deleteColumnsInput, deleteColumnsSchema, getColumnsInput, getColumnsSchema, updateColumnInput, updateColumnSchema }
+    from '../schemas/column.schema';
 
 /* try-catch handle */
-export const use = (fn: any) => (req: Request, res: Response, next: NextFunction) =>
+export const tryCatch = (fn: any) => (req: Request, res: Response, next: NextFunction) =>
     Promise.resolve(fn(req, res, next)).catch(next);
 
 /* all routes */
-module.exports = function (router: any) {
-    router.post('/columns', validation(createColumnSchema), use(createColumnHandler));
+module.exports = function (router: Express) {
+    router.get('/columns', tryCatch(getAllColumnsHandler));
+    router.post('/columns', validation(createColumnSchema), tryCatch(createColumnHandler));
+    router.get('/columns/:columnsId', validation(getColumnsSchema), tryCatch(getColumnHandler));
+    router.put('/columns/:columnsId', validation(updateColumnSchema), tryCatch(updateColumnsHandler));
+    router.delete('/columns/:columnsId', validation(deleteColumnsSchema), tryCatch(deleteColumnsHandler));
 };
 
-
-/* create handler */
+/* create columns handler for a single form */
 async function createColumnHandler(_req: Request, _res: Record<string, any>) {
     var responsedata: any = {};
 
@@ -32,3 +36,29 @@ async function createColumnHandler(_req: Request, _res: Record<string, any>) {
     const column = await createColumn(_req.body);
     return _res.apiSuccess(column);
 };
+
+/* handler for get extra columns of a single form */
+export async function getColumnHandler(_req: Request<getColumnsInput["params"]>, _res: Record<string, any>) {
+    const extraColumnsDetails = await getColumn({ _id: _req.params.columnsId });
+    return _res.apiSuccess(extraColumnsDetails);
+};
+
+/* handler for list of extra columns */
+export async function getAllColumnsHandler(_req: Request, _res: Record<string, any>) {
+    const extraColumnsList = await getAllColumns();
+    return _res.apiSuccess(extraColumnsList);
+};
+
+/* handler for update extra columns */
+export async function updateColumnsHandler(_req: Request<updateColumnInput["params"]>, _res: Record<string, any>) {
+    const updateColumn = await updatedColumns({ _id: _req.params.columnsId }, _req.body, { new: true });
+    return _res.apiSuccess(updateColumn);
+};
+
+/* handler for delete extra columns */
+export async function deleteColumnsHandler(_req: Request<deleteColumnsInput["params"]>, _res: Record<string, any>) {
+    const deleteColumn = await deleteColumns({ _id: _req.params.columnsId });
+    return _res.apiSuccess(deleteColumn);
+};
+
+

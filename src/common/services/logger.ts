@@ -6,7 +6,7 @@
 // Application Error/Exception/AnyLevel logging onto Console
 // Process Error/Exception logging onto Console
 
-module.exports = function (_label: any) {
+module.exports = function logger(_label: any) {
     return generateLogger(_label);
 };
 

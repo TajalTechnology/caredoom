@@ -6,13 +6,16 @@ import ColumnModel from "../models/column.model";
 import _responce from "../common/utils/res.message";
 
 /* try-catch handle */
-const use = (fn: any) => (req: Request, res: Response, next: NextFunction) =>
+export const use = (fn: any) => (req: Request, res: Response, next: NextFunction) =>
     Promise.resolve(fn(req, res, next)).catch(next);
 
+/* all routes */
 module.exports = function (router: any) {
     router.post('/columns', validation(createColumnSchema), use(createColumnHandler));
 };
 
+
+/* create handler */
 async function createColumnHandler(_req: Request, _res: Record<string, any>) {
     var responsedata: any = {};
 

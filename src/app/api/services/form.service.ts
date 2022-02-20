@@ -1,29 +1,24 @@
-import { DocumentDefinition } from 'mongoose';
+import { DocumentDefinition, FilterQuery } from 'mongoose';
 import FormModel, { FormDocument } from '../../models/form.model';
 import ColumnModel, { ColumnDocument } from '../../models/column.model';
+import { Request, Response } from "express";
 
-export async function createForm(input: DocumentDefinition<Omit<FormDocument, "createdAt" | "updatedAt">>) {
-    let id = "620f435ce91d1ad40150b910";
-    const extraColumn = await ColumnModel.findOne({ _id: id }, { createdAt: 0, updatedAt: 0, __v: 0, _id: 0 }).lean();
-
-    var _input: Record<string, any>;
-    extraColumn ? _input = { ...input, ...extraColumn } : _input = input;
-
-    /* this loop is for extraColumn validation */
-    for (let key in extraColumn) {
-
-        if (input.hasOwnProperty(key)) {
-            if (typeof input[key] !== extraColumn[key].dataType) {
-                return 'Type does not match';
-            }
-            if (input[key].length < extraColumn[key].minLength) {
-                return 'Minimum length is 4';
-            }
-            if (input[key].length > extraColumn[key].maxLength) {
-                return 'Maximum length is 40';
-            }
-        }
-    };
+export async function createForm(
+    input: DocumentDefinition<Omit<FormDocument, "createdAt" | "updatedAt">>,
+    query: FilterQuery<ColumnDocument>,
+) {
+    if (query) {
+        const extraColumn = await ColumnModel.findOne({ _id: query }, { createdAt: 0, updatedAt: 0, __v: 0, _id: 0 }).lean();
+        
+        /* extraColumn validation check */
+        for (let key in extraColumn) {
+            if (input.hasOwnProperty(key)) {
+                if (typeof input[key] !== extraColumn[key].dataType) return 'Type does not match';
+                if (input[key].length < extraColumn[key].minLength) return 'Minimum length is 4';
+                if (input[key].length > extraColumn[key].maxLength) return 'Maximum length is 40';
+            };
+        };
+    }
     return await FormModel.create(input);
 };
 
@@ -33,6 +28,9 @@ export async function getForm(id: string) {
 }
 
 
+    // var _input: Record<string, any>;
+    // extraColumn ? _input = { ...input, ...extraColumn } : _input = input;
+    
 /* Different logic */
 
     // const extraColumn = await ColumnModel.find();

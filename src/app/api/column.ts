@@ -1,13 +1,17 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { createColumn } from './services/column.service';
 
-module.exports = function (router: { post: (arg0: string, arg1: (req: any, res: any) => any) => void; }) {
-    router.post('/columns', createColumnHandler);
+const use = (fn: any) => (req: Request, res: Response, next: NextFunction) =>
+    Promise.resolve(fn(req, res, next)).catch(next);
+
+module.exports = function (router: any) {
+    router.post('/columns', use(createColumnHandler));
 };
 
 async function createColumnHandler(
     _req: Request,
-    _res: Response
+    _res: Response,
+    next: NextFunction,
 ) {
     const column = await createColumn(_req.body);
     return _res.send(column);

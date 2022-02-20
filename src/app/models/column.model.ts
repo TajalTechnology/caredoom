@@ -11,14 +11,14 @@ export interface ColumnDocument extends mongoose.Document {
     bDisplay: boolean;
     bDisabled: boolean;
     evaluationFormula: boolean;
-    createdAt:Date,
-    updatedAt:Date
+    createdAt: Date,
+    updatedAt: Date
 };
 
 /* schema */
 const columnSchema = new mongoose.Schema(
     {
-        formName: { type: String }
+        formName: { type: String, required: true, unique: true }
         // columnName: { type: String },
         // assignment: { type: String },
         // dataType: {

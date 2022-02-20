@@ -1,4 +1,5 @@
 import utils from '../common/services/utils';
+import { NextFunction, Request, Response } from "express";
 
 /* ----------------------------------- */
 /* Initializing Express App */
@@ -17,6 +18,8 @@ app.use(function (req: any, res: { header: (arg0: string, arg1: string) => void;
     next();
 });
 
+
+
 /* ----------------------------------- */
 /* Loading pre-required local service */
 /* ----------------------------------- */
@@ -24,6 +27,7 @@ utils.localService('logger', app);
 utils.localService('mongoose', app);
 utils.middleware('body-parser', app);
 utils.middleware('routes', app);
+utils.middleware('try-catch', app);
 
 app.listen(process.env.API_PORT, () => {
     return console.log(`Express is listening at http://localhost:${process.env.API_PORT}`);

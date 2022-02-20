@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 /* interface */
 export interface ColumnDocument extends mongoose.Document {
     columnName: string;
+    formName: string;
+    message:string;
+    column:string;
     assignment: string;
     dataType: string;
     maxLength: number;
@@ -11,14 +14,14 @@ export interface ColumnDocument extends mongoose.Document {
     bDisplay: boolean;
     bDisabled: boolean;
     evaluationFormula: boolean;
-    createdAt:Date,
-    updatedAt:Date
+    createdAt: Date,
+    updatedAt: Date
 };
 
 /* schema */
 const columnSchema = new mongoose.Schema(
     {
-        formName: { type: String }
+        formName: { type: String, required: true, unique: true }
         // columnName: { type: String },
         // assignment: { type: String },
         // dataType: {

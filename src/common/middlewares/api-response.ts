@@ -1,0 +1,61 @@
+module.exports = function (_app: { use: (arg0: any, arg1: (_req: any, _res: any, _next: any) => void) => void; locals: { baseUri: any; }; }) {
+    _app.use(_app.locals.baseUri, function (_req, _res, _next) {
+        var responseStatus: number;
+
+        function typeOf(_var: any) {
+            return Array.isArray(_var) ? 'array' : typeof _var;
+        }
+
+        _res.api = function (_status: any, _data: { errors?: any; }) {
+            var response: any = {};
+            response.status = responseStatus;
+            switch (typeOf(_data)) {
+                case 'object':
+                    if ('errors' in _data && !!_data.errors) {
+                        response = _data;
+                    } else {
+                        response = _data;
+                    }
+                    break;
+                case 'string':
+                    response.message = _data;
+                    break;
+                default:
+                    response.data = _data;
+                    break;
+            }
+            response.status = responseStatus;
+            /*if (_status === 200) response.status = 1;
+            else if (_status !== 500) response.status = 2;*/
+            _res.status(_status).send(JSON.stringify(response));
+        };
+
+        _res.apiSuccess = function (_data: any) {
+            responseStatus = 1;
+            return _res.api(200, _data);
+        };
+
+        _res.apiWarning = function (_data: any) {
+            responseStatus = 2;
+            return _res.api(200, _data);
+        };
+
+        _res.apiSessionExpired = function (_data: any) {
+            responseStatus = 2;
+            return _res.api(410, _data);
+        };
+
+        _res.apiError = function (_data: any) {
+            responseStatus = 0;
+            _res.api(500, _data);
+        };
+
+        _res.apiDuplicate = function (_data: any) {
+            responseStatus = 0;
+            _res.api(302, _data);
+        };
+
+        _next();
+    });
+};
+

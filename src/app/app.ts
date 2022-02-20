@@ -1,4 +1,6 @@
 import utils from '../common/services/utils';
+import { NextFunction, Request, Response } from "express";
+
 
 /* ----------------------------------- */
 /* Initializing Express App */
@@ -23,6 +25,19 @@ app.use(function (req: any, res: { header: (arg0: string, arg1: string) => void;
 utils.localService('logger', app);
 utils.localService('mongoose', app);
 utils.middleware('body-parser', app);
+utils.middleware('api-response', app);
+
+
+app.use(function (err: any, _req: Request, _res: Response, next: NextFunction) {
+    if (!err) {
+        return next();
+        
+    }
+    console.log('Hello');
+    // logger.error(err.message);
+    return _res.status(500).json({ message: 'Error' });
+});
+
 utils.middleware('routes', app);
 
 app.listen(process.env.API_PORT, () => {

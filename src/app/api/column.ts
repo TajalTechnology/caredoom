@@ -5,16 +5,16 @@ import { createColumnSchema } from '../schemas/column.schema';
 import ColumnModel from "../models/column.model";
 import _responce from "../common/utils/res.message";
 
+/* try-catch handle */
+const use = (fn: any) => (req: Request, res: Response, next: NextFunction) =>
+    Promise.resolve(fn(req, res, next)).catch(next);
 
 module.exports = function (router: any) {
-    router.post('/columns', validation(createColumnSchema), createColumnHandler);
+    router.post('/columns', validation(createColumnSchema), use(createColumnHandler));
 };
 
-async function createColumnHandler(
-    _req: Request,
-    _res: Response
-) {
-    var responsedata = {};
+async function createColumnHandler(_req: Request, _res: Record<string, any>) {
+    var responsedata: any = {};
 
     /* unique form name checker */
     if (_req.body.formName) {
@@ -25,6 +25,7 @@ async function createColumnHandler(
         };
     };
 
+    /* responce data */
     const column = await createColumn(_req.body);
-    return _res.send(column);
+    return _res.apiSuccess(column);
 };

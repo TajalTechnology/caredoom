@@ -1,5 +1,8 @@
-module.exports = function (_app: { use: (arg0: any, arg1: (_req: any, _res: any, _next: any) => void) => void; locals: { baseUri: any; }; }) {
-    _app.use(_app.locals.baseUri, function (_req, _res, _next) {
+import { NextFunction, Request, Response } from "express";
+import { any } from "zod";
+
+module.exports = function (_app: any) {
+    _app.use(_app.locals.baseUri, function (_req: Request, _res: Record<string, any>, _next: NextFunction) {
         var responseStatus: number;
 
         function typeOf(_var: any) {
@@ -27,7 +30,7 @@ module.exports = function (_app: { use: (arg0: any, arg1: (_req: any, _res: any,
             response.status = responseStatus;
             /*if (_status === 200) response.status = 1;
             else if (_status !== 500) response.status = 2;*/
-            _res.status(_status).send(JSON.stringify(response));
+            _res.status(_status).json(response);
         };
 
         _res.apiSuccess = function (_data: any) {

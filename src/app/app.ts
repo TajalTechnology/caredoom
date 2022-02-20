@@ -26,19 +26,8 @@ utils.localService('logger', app);
 utils.localService('mongoose', app);
 utils.middleware('body-parser', app);
 utils.middleware('api-response', app);
-
-
-app.use(function (err: any, _req: Request, _res: Response, next: NextFunction) {
-    if (!err) {
-        return next();
-        
-    }
-    console.log('Hello');
-    // logger.error(err.message);
-    return _res.status(500).json({ message: 'Error' });
-});
-
 utils.middleware('routes', app);
+utils.middleware('try-catch', app);
 
 app.listen(process.env.API_PORT, () => {
     return console.log(`Express is listening at http://localhost:${process.env.API_PORT}`);

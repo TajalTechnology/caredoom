@@ -19,5 +19,5 @@ export type updateColumnInput = TypeOf<typeof updateColumnSchema>;
 
 
 /* validation params(columnsId) for delete api*/
-export const deleteColumnsSchema = object({ ...params });
-export type deleteColumnsInput = TypeOf<typeof deleteColumnsSchema>;
+export const deleteColumnSchema = object({ ...params });
+export type deleteColumnsInput = TypeOf<typeof deleteColumnSchema>;

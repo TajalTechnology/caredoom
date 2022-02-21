@@ -3,7 +3,7 @@ import _responce from "../common/utils/res.message";
 import validation from "../common/middlewares/validation";
 import { NextFunction, Request, Response, Express } from "express";
 import { createColumn, deleteColumns, getAllColumns, getColumn, updatedColumns } from './services/column.service';
-import { createColumnSchema, deleteColumnsInput, deleteColumnsSchema, getColumnsInput, getColumnsSchema, updateColumnInput, updateColumnSchema }
+import { createColumnSchema, deleteColumnsInput, deleteColumnSchema, getColumnsInput, getColumnsSchema, updateColumnInput, updateColumnSchema }
     from '../schemas/column.schema';
 
 /* try-catch handle */
@@ -16,7 +16,7 @@ module.exports = function (router: Express) {
     router.post('/columns', validation(createColumnSchema), tryCatch(createColumnHandler));
     router.get('/columns/:columnsId', validation(getColumnsSchema), tryCatch(getColumnHandler));
     router.put('/columns/:columnsId', validation(updateColumnSchema), tryCatch(updateColumnsHandler));
-    router.delete('/columns/:columnsId', validation(deleteColumnsSchema), tryCatch(deleteColumnsHandler));
+    router.delete('/columns/:columnsId', validation(deleteColumnSchema), tryCatch(deleteColumnsHandler));
 };
 
 /* create columns handler for a single form */

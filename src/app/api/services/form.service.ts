@@ -1,31 +1,82 @@
-import { DocumentDefinition, FilterQuery } from 'mongoose';
-import FormModel, { FormDocument } from '../../models/form.model';
+import { DocumentDefinition, FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
+import FormModel, { FormDocument, formSchema } from '../../models/form.model';
 import ColumnModel, { ColumnDocument } from '../../models/column.model';
-import { Request, Response } from "express";
+import _responce from '../../common/utils/res.message';
 
 export async function createForm(
-    input: DocumentDefinition<Omit<FormDocument, "createdAt" | "updatedAt">>,
-    query: FilterQuery<ColumnDocument>,
-) {
-    if (query) {
-        const extraColumn = await ColumnModel.findOne({ _id: query }, { createdAt: 0, updatedAt: 0, __v: 0, _id: 0 }).lean();
+    input:Record<string, any>,// input: DocumentDefinition<Omit<FormDocument, "createdAt" | "updatedAt">>,
+    query: FilterQuery<ColumnDocument> ) 
+    {
+    var _input: Record<string, any> = {};
+    const formFields:any = formSchema.tree;
+
+    /* recive only formSchema fields */
+    for (let key in formFields) {if(input.hasOwnProperty(key))_input[key] = input[key]};
+
+    /* add if has extra columns fields */
+    if (query.extraColumnsId) {
+        const extraColumn:Record<string, any> = await ColumnModel.findOne({ _id: query.extraColumnsId }, { createdAt: 0, updatedAt: 0, __v: 0, _id: 0 }).lean();
         
         /* extraColumn validation check */
         for (let key in extraColumn) {
             if (input.hasOwnProperty(key)) {
-                if (typeof input[key] !== extraColumn[key].dataType) return 'Type does not match';
-                if (input[key].length < extraColumn[key].minLength) return 'Minimum length is 4';
-                if (input[key].length > extraColumn[key].maxLength) return 'Maximum length is 40';
+                var validationMessage:Record<string, any> = {};
+
+                if (typeof input[key] !== extraColumn[key].dataType) validationMessage.type = `${input[key]} ${_responce.Typematch}`;
+                if (input[key].length < extraColumn[key].minLength) validationMessage.minLength= `${input[key]} ${_responce.columMinLength} ${extraColumn[key].minLength}`;
+                if (input[key].length > extraColumn[key].maxLength) validationMessage.maxLength= `${input[key]} ${_responce.columnMaxLength} ${extraColumn[key].maxLength}`;
+
+                if(Object.keys(validationMessage).length === 0){ _input[key] = input[key];
+                }else{return validationMessage};
             };
-        };
-    }
-    return await FormModel.create(input);
+        }; 
+    };
+
+    return await FormModel.create(_input);
 };
 
-export async function getForm(id: string) {
-    return await ColumnModel.findById({ _id: id });
-    // console.log(id);
-}
+export async function getForm(query: FilterQuery<FormDocument>, options: QueryOptions = { lean: true }) {
+    var responsedata: any = {};
+    const formData = await FormModel.findOne(query, {}, options);
+    if (!formData) return responsedata.message = _responce.noDataFound;
+    return responsedata.formData = formData;
+};
+
+export async function getForms() {
+    var responsedata: any = {};
+    /* find list & responce */
+    const list = await FormModel.find();
+    return responsedata.list = list;
+};
+
+export async function updatedForm(query: FilterQuery<FormDocument>, update: UpdateQuery<FormDocument>, options: QueryOptions) {
+    var responsedata: any = {};
+    const form = await FormModel.findOneAndUpdate(query, update, options);
+    return responsedata.form = form;
+};
+
+export async function deleteForm(query: FilterQuery<FormDocument>) {
+    var responsedata: any = {};
+    /* find columns & deleted */
+    const formData = await FormModel.findByIdAndDelete(query);
+    if (!formData) return responsedata.message = _responce.noDataFound;
+    return responsedata.message = _responce.formDataDeleted;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // var _input: Record<string, any>;

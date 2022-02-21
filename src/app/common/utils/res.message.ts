@@ -10,6 +10,13 @@ const _responce = {
     passwordRequired: 'Please enter password',
     formIdRequired: 'Form id required as a params',
     columnsIdRequired: 'Please enter columns id for see extra columns of your form',
+
+    /* FORM */
+    Typematch: 'Type does not match',
+    columMinLength: 'should be minimum length',
+    columnMaxLength: 'should be maximum length',
+    noDataFound:'According to you, no record found',
+    formDataDeleted: 'This record deleted successfully',
 };
 
 export default _responce;

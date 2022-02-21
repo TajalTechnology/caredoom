@@ -8,7 +8,7 @@ export interface FormDocument extends mongoose.Document {
 };
 
 /* schema */
-const formSchema = new mongoose.Schema(
+export const formSchema = new mongoose.Schema(
     {
         username: { type: String, required: true },
         email: { type: String, required: true },

@@ -53,6 +53,11 @@ module.exports = function (_app: any) {
             _res.api(500, _data);
         };
 
+        _res.apiUnAuthorized = function (_data: any) {
+            responseStatus = 0;
+            return _res.api(403, _data);
+        };
+
         _res.apiDuplicate = function (_data: any) {
             responseStatus = 0;
             _res.api(302, _data);

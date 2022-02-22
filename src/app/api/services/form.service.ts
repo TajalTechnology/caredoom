@@ -1,12 +1,10 @@
-import { DocumentDefinition, FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
+import {FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
 import FormModel, { FormDocument, formSchema } from '../../models/form.model';
 import ColumnModel, { ColumnDocument } from '../../models/column.model';
 import _responce from '../../common/utils/res.message';
 
-export async function createForm(
-    input:Record<string, any>,// input: DocumentDefinition<Omit<FormDocument, "createdAt" | "updatedAt">>,
-    query: FilterQuery<ColumnDocument> ) 
-    {
+
+export async function createForm(input:Record<string, any>, query: FilterQuery<ColumnDocument> ) {
     var _input: Record<string, any> = {};
     const formFields:any = formSchema.tree;
     var responsedata: any = {};

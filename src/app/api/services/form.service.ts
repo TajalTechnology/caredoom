@@ -9,22 +9,23 @@ export async function createForm(
     {
     var _input: Record<string, any> = {};
     const formFields:any = formSchema.tree;
+    var responsedata: any = {};
 
     /* recive only formSchema fields */
     for (let key in formFields) {if(input.hasOwnProperty(key))_input[key] = input[key]};
 
     /* add if has extra columns fields */
-    if (query.extraColumnsId) {
-        const extraColumn:Record<string, any> = await ColumnModel.findOne({ _id: query.extraColumnsId }, { createdAt: 0, updatedAt: 0, __v: 0, _id: 0 }).lean();
-        
+    if (query.formId) {
+        const extraColumn:Record<string, any> = await ColumnModel.findOne({ _id: query.formId }, { createdAt: 0, updatedAt: 0, __v: 0, _id: 0 }).lean();
+        if (!extraColumn) return responsedata.message = _responce.noColumnsFound;
         /* extraColumn validation check */
         for (let key in extraColumn) {
             if (input.hasOwnProperty(key)) {
                 var validationMessage:Record<string, any> = {};
 
-                if (typeof input[key] !== extraColumn[key].dataType) validationMessage.type = `${input[key]} ${_responce.Typematch}`;
-                if (input[key].length < extraColumn[key].minLength) validationMessage.minLength= `${input[key]} ${_responce.columMinLength} ${extraColumn[key].minLength}`;
-                if (input[key].length > extraColumn[key].maxLength) validationMessage.maxLength= `${input[key]} ${_responce.columnMaxLength} ${extraColumn[key].maxLength}`;
+                if (typeof input[key] !== extraColumn[key].dataType) validationMessage.type = `${key} ${_responce.Typematch}`;
+                if (input[key].length < extraColumn[key].minLength) validationMessage.minLength= `${key} ${_responce.columMinLength} ${extraColumn[key].minLength}`;
+                if (input[key].length > extraColumn[key].maxLength) validationMessage.maxLength= `${key} ${_responce.columnMaxLength} ${extraColumn[key].maxLength}`;
 
                 if(Object.keys(validationMessage).length === 0){ _input[key] = input[key];
                 }else{return validationMessage};

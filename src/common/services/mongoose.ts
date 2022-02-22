@@ -23,7 +23,7 @@ var dbURI = process.env.DB_URL;
 // mongoose.set('useCreateIndex', true);
 // mongoose.set('useNewUrlParser', true);
 // mongoose.set('useFindAndModify', false);
-mongoose.connect("mongodb://root:password@localhost:27018/form", function(err: any, db: any) {
+mongoose.connect(dbURI, function(err: any, db: any) {
   if (err) {
     logger.error('Unable to connect to the database:', err);
   } else {

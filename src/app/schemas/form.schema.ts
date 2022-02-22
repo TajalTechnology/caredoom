@@ -9,11 +9,10 @@ const payload = {
         password: string({ required_error: _responce.passwordRequired }),
     }),
 };
-const query = { query: object({ id: string({}) }) };
+// const query = { query: object({ id: string({}) }) };
 const params = { params: object({ formId: string({ required_error: _responce.formIdRequired }) }) };
 
-
-export const createFormSchema = object({ ...payload, ...query });
+export const createFormSchema = object({ ...payload, ...params });
 export type CreateFormInput = TypeOf<typeof createFormSchema>;
 
 

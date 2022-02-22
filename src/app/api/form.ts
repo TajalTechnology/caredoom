@@ -10,7 +10,7 @@ const tryCatch = (fn: any) => (req: Request, res: Response, next: NextFunction) 
 /* all routes */
 module.exports = function (router: Express) {
     router.get('/forms', tryCatch(getFormsHandler));
-    router.post('/forms', validation(createFormSchema), tryCatch(createFormHandler));
+    router.post('/forms/:formId', validation(createFormSchema), tryCatch(createFormHandler));
     router.get('/forms/:formId', validation(getFormSchema), tryCatch(getFormHandler));
     router.put('/forms/:formId', validation(updateFormSchema), tryCatch(updateFormHandler));
     router.delete('/forms/:formId', validation(deleteFormSchema), tryCatch(deleteFormHandler));
@@ -18,8 +18,8 @@ module.exports = function (router: Express) {
 
 /* handler for create a single form data */
 async function createFormHandler(_req: Request<{}, {}, CreateFormInput["body"]>, _res: Record<string, any>) {
-    var extraColumnsId = _req.query.id as string;
-    const form = await createForm(_req.body, { extraColumnsId });
+    var extraColumnsId = _req.params;
+    const form = await createForm(_req.body, extraColumnsId);
     return _res.apiSuccess(form);
 };
 

@@ -22,18 +22,6 @@ export interface ColumnDocument extends mongoose.Document {
 const columnSchema = new mongoose.Schema(
     {
         formName: { type: String, required: true, unique: true }
-        // columnName: { type: String },
-        // assignment: { type: String },
-        // dataType: {
-        //     type: String,
-        //     enum: ['string', 'int', 'boolean'],
-        // },
-        // maxLength: { type: Number },
-        // minLength: { type: Number },
-        // bSearch: { type: Boolean },
-        // bDisplay: { type: Boolean },
-        // bDisabled: { type: Boolean },
-        // evaluationFormula: { type: Boolean },
     },
     {
         timestamps: true,

@@ -6,6 +6,7 @@ import _responce from '../../common/utils/res.message';
 
 export async function createForm(input:Record<string, any>, query: FilterQuery<ColumnDocument> ) {
     var _input: Record<string, any> = {};
+    // @ts-ignore
     const formFields:any = formSchema.tree;
     var responsedata: any = {};
 

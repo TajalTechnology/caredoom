@@ -25,7 +25,6 @@ async function createFormHandler(_req: Request<{}, {}, CreateFormInput["body"]>,
 
 /* handler for get a single form data */
 export async function getFormHandler(_req: Request<getFormInput["params"]>, _res: Record<string, any>) {
-    console.log(_req.params.formId)
     const formData = await getForm({ _id: _req.params.formId });
     return _res.apiSuccess(formData);
 };

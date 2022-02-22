@@ -1,20 +1,32 @@
-import config, { get } from "config";
-import { signJwt, verifyJwt } from "../../common/utils/jwt";
-import SessionModel from "../../models/session.model";
+import { get } from "lodash";
+import config from "config";
+import { FilterQuery, UpdateQuery } from "mongoose";
 import { findUser } from "./user.service";
-
+import SessionModel, { SessionDocument } from "../../models/session.model";
+import { signJwt, verifyJwt } from "../../common/utils/jwt";
 
 export async function createSession(userId: string, userAgent: string) {
   const session = await SessionModel.create({ user: userId, userAgent });
+
   return session.toJSON();
-};
+}
+
+export async function findSessions(query: FilterQuery<SessionDocument>) {
+  return SessionModel.find(query).lean();
+}
+
+export async function updateSession(
+  query: FilterQuery<SessionDocument>,
+  update: UpdateQuery<SessionDocument>
+) {
+  return SessionModel.updateOne(query, update);
+}
 
 export async function reIssueAccessToken({
   refreshToken,
 }: {
   refreshToken: string;
 }) {
-  console.log(refreshToken)
   const { decoded } = verifyJwt(refreshToken);
 
   if (!decoded || !get(decoded, "session")) return false;
@@ -33,4 +45,4 @@ export async function reIssueAccessToken({
   );
 
   return accessToken;
-};
+}

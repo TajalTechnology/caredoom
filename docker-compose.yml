@@ -9,10 +9,12 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
-      # MONGO_INITDB_ROOT_DATABASE:forms
+      MONGO_INITDB_DATABASE: form
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: password
 
     ports:
-      - '27017:27018'
+      - '27018:27018'
 
   web:
     build: ./
@@ -21,7 +23,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
-      ME_CONFIG_MONGODB_URL: mongodb://root:password@localhost:27018/form
+      ME_CONFIG_MONGODB_URL: mongodb://root:password@172.19.0.2:27017/form
 
     depends_on:
       - db

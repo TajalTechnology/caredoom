@@ -1,4 +1,5 @@
 export default {
+  port:3000,
   saltWorkFactor: 10,
   accessTokenTtl: "115m",
   fileBasePath: "/home/taj/Desktop/Testing-Express-REST-API/uploads/",

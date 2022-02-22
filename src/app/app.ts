@@ -1,5 +1,7 @@
+import config from 'config';
 import utils from '../common/services/utils';
 import deserializeUser from './common/middlewares/deserializeUser';
+
 
 /* ----------------------------------- */
 /* Initializing Express App */
@@ -9,7 +11,7 @@ var appLocals = {
     'dirname': __dirname,
 };
 
-var app: any = utils.initApp(appLocals);
+export var app: any = utils.initApp(appLocals);
 
 app.use(function (req: any, res: { header: (arg0: string, arg1: string) => void; }, next: () => void) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -29,6 +31,8 @@ utils.middleware('routes', app);
 utils.localService('logger', app);
 utils.middleware('try-catch', app);
 
-app.listen(process.env.API_PORT, () => {
-    return console.log(`Express is listening at http://localhost:${process.env.API_PORT}`);
+
+const port = config.get<number>("port");
+app.listen(port, () => {
+    return console.log(`Express is listening at http://localhost:${port}`);
 });

@@ -23,7 +23,8 @@ var dbURI = process.env.DB_URL;
 // mongoose.set('useCreateIndex', true);
 // mongoose.set('useNewUrlParser', true);
 // mongoose.set('useFindAndModify', false);
-mongoose.connect(dbURI, function(err: any, db: any) {
+mongoose.connect(dbURI, function (err: any, db: any) {
+
   if (err) {
     logger.error('Unable to connect to the database:', err);
   } else {
@@ -32,9 +33,9 @@ mongoose.connect(dbURI, function(err: any, db: any) {
   }
 });
 
-mongoose.Model.handleResponse = function(_promise: { spread: (arg0: (_record: any, _status: any) => void) => any; }, _res: { apiSuccess: (arg0: any) => void; }) {
+mongoose.Model.handleResponse = function (_promise: { spread: (arg0: (_record: any, _status: any) => void) => any; }, _res: { apiSuccess: (arg0: any) => void; }) {
   var model = this;
-  return _promise.spread(function(_record, _status) {
+  return _promise.spread(function (_record, _status) {
     /* eslint-disable indent */
     switch (_status) {
       case -1:
@@ -55,31 +56,31 @@ mongoose.Model.handleResponse = function(_promise: { spread: (arg0: (_record: an
   });
 };
 
-mongoose.Model.handleDoesNotExistsCatch = function(_promise: Promise<any>, _res: any) {
+mongoose.Model.handleDoesNotExistsCatch = function (_promise: Promise<any>, _res: any) {
   var model = this;
-  return _promise.catch(function(_error) {
+  return _promise.catch(function (_error) {
     console.log(_error);
     model.returnDoesNotExistsError(_res);
   });
 };
 
-mongoose.Model.handleAlreadyExistsCatch = function(_promise: Promise<any>, _res: any) {
+mongoose.Model.handleAlreadyExistsCatch = function (_promise: Promise<any>, _res: any) {
   var model = this;
-  return _promise.catch(function(_error) {
+  return _promise.catch(function (_error) {
     console.log(_error);
     model.returnAlreadyExistsError(_res);
   });
 };
 
-mongoose.Model.handleEmptyResponseCatch = function(_promise: Promise<any>, _res: any) {
+mongoose.Model.handleEmptyResponseCatch = function (_promise: Promise<any>, _res: any) {
   var model = this;
-  return _promise.catch(function(_error) {
+  return _promise.catch(function (_error) {
     console.log(_error);
     model.returnEmptyResponseError(_res);
   });
 };
 
-mongoose.Model.titleCase = function(string: string) {
+mongoose.Model.titleCase = function (string: string) {
   var split = string.toLowerCase().split(' ');
   for (var i = 0; i < split.length; i++) {
     split[i] = split[i].charAt(0).toUpperCase() + split[i].substring(1);

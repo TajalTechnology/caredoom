@@ -17,5 +17,4 @@ WORKDIR /tmp
 RUN npm build
 
 CMD npm run dev
-# /src/build/src/app/app.js
 

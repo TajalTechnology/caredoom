@@ -5,17 +5,20 @@
 // If Development:
 // Application Error/Exception/AnyLevel logging onto Console
 // Process Error/Exception logging onto Console
+import path from "path";
 
 module.exports = function logger(_label: any) {
     return generateLogger(_label);
 };
 
 function generateLogger(_label: any) {
-    var path = require('path');
+    // var path = require('path');
     var winston = require('winston');
     var DailyRotateFile = require('winston-daily-rotate-file');
 
-    var logDir = path.join(process.env.LOGS_DIR, path.sep);
+    let logs = process.env.LOGS_DIR
+    var logDir;
+    if (logs) logDir = path.join(logs, path.sep);
     var ext = '.' + process.env.LOG_EXT;
 
     var transports = [
@@ -36,26 +39,26 @@ function generateLogger(_label: any) {
     ];
 
     // If dev Environment please enable console logging
-    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
-        var myFormat = winston.format.printf(function (info: { level: string; meta: { [x: string]: any; }; timestamp: string; label: string; message: string; }) {
+    // if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
+        var myFormat = winston.format.printf(function (info: any) {
             var meta = '';
             var level = info.level.toUpperCase();
 
-            if (info.meta && Object.keys(info.meta).length) {
-                level === 'ERROR' && (delete info.meta['os']) && (delete info.meta['trace']);
-                meta = '\n' + JSON.stringify(info.meta, null, 2);
-            }
+            // if (info.meta && Object.keys(info.meta).length) {
+            //     level === 'ERROR' && (delete info.meta['os']) && (delete info.meta['trace']);
+            //     meta = '\n' + JSON.stringify(info.meta, null, 2);
+            // }
 
-            return '[$timestamp][$level][$label]: $msg $meta'.
-                replace('$timestamp', info.timestamp).
-                replace('$level', info.level).
-                replace('$label', info.label).
-                replace('$msg', info.message).
-                replace('$meta', meta);
+            // return '[$timestamp][$level][$label]: $msg $meta'.
+            //     replace('$timestamp', info.timestamp).
+            //     replace('$level', info.level).
+            //     replace('$label', info.label).
+            //     replace('$msg', info.message).
+            //     replace('$meta', meta);
         });
-        transports.push(new winston.transports.Console());
-        exceptionHandlers.push(new winston.transports.Console());
-    }
+        // transports.push(new winston.transports.Console());
+        // exceptionHandlers.push(new winston.transports.Console());
+    // }
 
     return winston.createLogger({
         format: winston.format.combine(

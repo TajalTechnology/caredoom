@@ -21,5 +21,5 @@ export async function validatePassword({ email, password }: {
 };
 
 export async function findUser(query: FilterQuery<UserDocument>) {
-    return UserModel.findOne(query).lean();
-  };
+    return await UserModel.findOne(query).lean();
+};

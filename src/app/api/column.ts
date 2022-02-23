@@ -41,6 +41,7 @@ async function createColumnHandler(_req: Request, _res: Record<string, any>) {
 /* handler for get extra columns of a single form */
 export async function getColumnHandler(_req: Request<getColumnsInput["params"]>, _res: Record<string, any>) {
     const extraColumnsDetails = await getColumn({ _id: _req.params.columnsId });
+    if (extraColumnsDetails._id !== _req.params.columnsId) return _res.apiDataNotFound(extraColumnsDetails);
     return _res.apiSuccess(extraColumnsDetails);
 };
 

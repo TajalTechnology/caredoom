@@ -45,7 +45,7 @@ describe('form', () => {
                 expect(statusCode).toBe(200);
                 expect(body._id).toBe(formId);
             })
-        })
+        });
 
 
     })

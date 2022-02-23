@@ -23,7 +23,7 @@ export async function getColumn(query: FilterQuery<ColumnDocument>, options: Que
     /* find columns & responce */
     const columns = await ColumnModel.findOne(query, {}, options);
     if (!columns) return responsedata.message = _responce.columnEmpty;
-    responsedata.columns = columns;
+    responsedata = columns;
     return responsedata;
 };
 

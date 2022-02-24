@@ -5,7 +5,6 @@ import { NextFunction, Request, Response, Express } from "express";
 import { createColumn, deleteColumns, getAllColumns, getColumn, updatedColumns } from './services/column.service';
 import { createColumnSchema, deleteColumnsInput, deleteColumnSchema, getColumnsInput, getColumnsSchema, updateColumnInput, updateColumnSchema }
     from '../schemas/column.schema';
-import authCheck from "../common/middlewares/authCheck";
 
 /* try-catch handle */
 export const tryCatch = (fn: any) => (req: Request, res: Response, next: NextFunction) =>

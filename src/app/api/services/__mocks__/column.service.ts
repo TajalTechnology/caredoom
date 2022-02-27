@@ -1,3 +1,4 @@
+import { models } from "mongoose";
 
 
 let columnList = {
@@ -109,6 +110,39 @@ export async function getColumn() {
     return responsedata;
 };
 
-export async function createColumn() {
-    console.log('Mock executed')
+export async function createColumn(input: any) {
+    /* create columns */
+    var responsedata: any = {};
+    const column ={
+        "_id": "621494e22821d8df6c56c809",
+        "columnOne": {
+            "columnName": "countryName",
+            "assignment": "auto",
+            "dataType": "string",
+            "maxLength": "40",
+            "minLength": "4",
+            "bSearch": "true",
+            "bDisplay": "true",
+            "bDisabled": "true",
+            "evaluationFormula": "true"
+        },
+        "columnTwo": {
+            "columnName": "districtName",
+            "assignment": "manual",
+            "dataType": "string",
+            "maxLength": "40",
+            "minLength": "4",
+            "bSearch": "true",
+            "bDisplay": "true",
+            "bDisabled": "true",
+            "evaluationFormula": "true"
+        },
+        "formName": "Md Tajal Islam",
+        "createdAt": "2022-02-22T07:46:42.857Z",
+        "updatedAt": "2022-02-22T07:46:42.857Z",
+        "__v": 0,
+        "status": 1
+    };
+    responsedata.columns = column;
+    return responsedata;
 };

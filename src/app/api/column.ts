@@ -5,6 +5,7 @@ import { NextFunction, Request, Response, Express } from "express";
 import { createColumn, deleteColumns, getAllColumns, getColumn, updatedColumns } from './services/column.service';
 import { createColumnSchema, deleteColumnsInput, deleteColumnSchema, getColumnsInput, getColumnsSchema, updateColumnInput, updateColumnSchema }
     from '../schemas/column.schema';
+import authCheck from "../common/middlewares/authCheck";
 
 /* try-catch handle */
 export const tryCatch = (fn: any) => (req: Request, res: Response, next: NextFunction) =>
@@ -13,7 +14,7 @@ export const tryCatch = (fn: any) => (req: Request, res: Response, next: NextFun
 /* all routes */
 module.exports = function (router: Express) {
     router.get('/columns', tryCatch(getAllColumnsHandler));
-    router.post('/columns', validation(createColumnSchema), tryCatch(createColumnHandler));
+    router.post('/columns', authCheck, validation(createColumnSchema), tryCatch(createColumnHandler));
     router.get('/columns/:columnsId', validation(getColumnsSchema), tryCatch(getColumnHandler));
     router.put('/columns/:columnsId', validation(updateColumnSchema), tryCatch(updateColumnsHandler));
     router.delete('/columns/:columnsId', validation(deleteColumnSchema), tryCatch(deleteColumnsHandler));
@@ -40,7 +41,7 @@ async function createColumnHandler(_req: Request, _res: Record<string, any>) {
 /* handler for get extra columns of a single form */
 export async function getColumnHandler(_req: Request<getColumnsInput["params"]>, _res: Record<string, any>) {
     const extraColumnsDetails = await getColumn({ _id: _req.params.columnsId });
-    if (extraColumnsDetails._id !== _req.params.columnsId) return _res.apiDataNotFound(extraColumnsDetails);
+    if (extraColumnsDetails._id.toString() !== _req.params.columnsId) return _res.apiDataNotFound(extraColumnsDetails);
     return _res.apiSuccess(extraColumnsDetails);
 };
 

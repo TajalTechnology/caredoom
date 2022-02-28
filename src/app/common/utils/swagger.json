@@ -23,6 +23,10 @@
     {
       "name": "Columns",
       "description": "API for create extra column"
+    },
+    {
+      "name": "Forms",
+      "description": "API for create a form with a form name And (extra column)"
     }
   ],
   "schemes": ["http"],
@@ -199,6 +203,131 @@
           }
         }
       }
+    },
+    "/forms/{formId}": {
+      "post": {
+        "tags": ["Forms"],
+        "summary": "Create extra column for new form",
+        "description": "Create colum for form",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "Extra column create for form",
+            "schema": {
+              "$ref": "#/definitions/FormModel"
+            }
+          },
+          {
+            "name": "formId",
+            "in": "path",
+            "description": "formId means the id of extra column",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": "New Form is created",
+            "schema": {
+              "$ref": "#/definitions/FormModel"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Forms"],
+        "summary": "get a single extra column list for a form",
+        "description": "a single column list",
+        "parameters": [
+          {
+            "name": "formId",
+            "in": "path",
+            "description": "formId means the of form which we want to get",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "List of colum for a single form",
+            "schema": {
+              "$ref": "#/definitions/FormModel"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Forms"],
+        "summary": "Delete  by formId",
+        "parameters": [
+          {
+            "name": "formId",
+            "in": "path",
+            "description": "formId means the of form which we want to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Forms"],
+        "summary": "Update extra column for new form",
+        "description": "Update colum for form",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "form update body",
+            "schema": {
+              "$ref": "#/definitions/FormModel"
+            }
+          },
+          {
+            "name": "formId",
+            "in": "path",
+            "description": "formId means the id which we want to update",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": "Form is updated",
+            "schema": {
+              "$ref": "#/definitions/FormModel"
+            }
+          }
+        }
+      }
+    },
+    "/forms": {
+      "get": {
+        "tags": ["Forms"],
+        "summary": "get all forms with data list",
+        "description": "all forms with data list",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "List of all forms with data list",
+            "schema": {
+              "$ref": "#/definitions/FormModel"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -272,6 +401,23 @@
             "bDisabled": "true",
             "evaluationFormula": "true"
           }
+        }
+      }
+    },
+    "FormModel": {
+      "required": ["username", "email", "password"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "examples": ["Md Tajal Islam"]
+        },
+        "email": {
+          "type": "string",
+          "examples": ["mdtajalislam1189@gmail.com"]
+        },
+        "password": {
+          "type": "string",
+          "examples": ["123456"]
         }
       }
     }

@@ -2,8 +2,6 @@ import { Express, Request, Response } from "express";
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { version } from "../../../../package.json";
-var logger = require('../services/logger')('mongoose');
-
 
 const options: swaggerJsDoc.Options = {
     definition: {
@@ -27,7 +25,7 @@ const options: swaggerJsDoc.Options = {
             },
         ],
     },
-    apis: ['../../api/*.ts', "('../../schemas/*.ts"],
+    apis: ['swagger.ts'],
 };
 
 const swaggerSpec = swaggerJsDoc(options);
@@ -41,8 +39,6 @@ function swaggerDocs(app: Express, port: number) {
         res.setHeader("Content-Type", "application/json");
         res.send(swaggerSpec);
     });
-
-    logger.info(`Docs available at http://localhost:${port}/docs`);
 }
 
 export default swaggerDocs;

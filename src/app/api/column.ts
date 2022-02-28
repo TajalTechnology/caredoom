@@ -13,6 +13,7 @@ export const tryCatch = (fn: any) => (req: Request, res: Response, next: NextFun
 
 /* all routes */
 module.exports = function (router: Express) {
+
     router.get('/columns', tryCatch(getAllColumnsHandler));
     router.post('/columns', authCheck, validation(createColumnSchema), tryCatch(createColumnHandler));
     router.get('/columns/:columnsId', validation(getColumnsSchema), tryCatch(getColumnHandler));

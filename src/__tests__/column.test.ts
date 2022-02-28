@@ -136,13 +136,13 @@ describe('column', () => {
     //create product
     describe('create column', () => {
 
-        //if uer not logged in
-        describe("given the user is not logged in", () => {
-            it("should return a 403", async () => {
-                const { body, statusCode } = await supertest(app).post("/api/columns");
-                expect(statusCode).toBe(403);
-            });
-        });//end
+        // //if uer not logged in
+        // describe("given the user is not logged in", () => {
+        //     it("should return a 403", async () => {
+        //         const { body, statusCode } = await supertest(app).post("/api/columns");
+        //         expect(statusCode).toBe(403);
+        //     });
+        // });//end
 
         //if user logged in
         describe("given the user is logged in", () => {
@@ -207,7 +207,7 @@ describe('column', () => {
         test('return a single column', async () => {
             // @ts-ignore
             const responce = await supertest(app).post('/api/columns')
-                .set("Authorization", `Bearer ${jwt}`)
+                // .set("Authorization", `Bearer ${jwt}`)
                 .send(getColumnPayload);
 
             const { body, statusCode } = await supertest(app).get(`/api/columns/${responce.body.columns._id}`);

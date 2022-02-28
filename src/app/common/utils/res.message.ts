@@ -9,6 +9,7 @@ const _responce = {
     formIdRequired: 'Form id required as a params',
     columnsIdRequired: 'Please enter columns id for see extra columns of your form',
     noColumnsFound: 'Could not find any columns record.Please write correct columns id',
+    enterColumnInfo:'Info should be fill up',
 
     /* FORM */
     Typematch: 'Type does not match',

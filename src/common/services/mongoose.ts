@@ -8,28 +8,16 @@ mongoose.Promise.config({
   },
 });
 
-// var DB_DIALECT = process.env.DB_DIALECT;
-// var DB_PORT = process.env.DB_PORT;
-// var DB_HOST = process.env.DB_HOST;
-// var DB_USER = process.env.DB_USER;
-// var DB_PASS = process.env.DB_PASS;
-// var DB_NAME = process.env.DB_NAME;
-
-// development
 var dbURI = process.env.DB_URL;
 
-// auth config
-// var dbURI = DB_DIALECT + '://' + DB_USER + ':' + DB_PASS + '@' + DB_HOST + ':' + DB_PORT + '/' + DB_NAME;
-// mongoose.set('useCreateIndex', true);
-// mongoose.set('useNewUrlParser', true);
-// mongoose.set('useFindAndModify', false);
 mongoose.connect(dbURI, function (err: any, db: any) {
 
   if (err) {
     logger.error('Unable to connect to the database:', err);
   } else {
+    console.log('Database Connection has been established successfully.')
     // mongoose.DATABASE_EXPORT = db;
-    logger.info('Database Connection has been established successfully.');
+    // logger.info('Database Connection has been established successfully.');
   }
 });
 

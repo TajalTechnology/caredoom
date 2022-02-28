@@ -13,15 +13,19 @@ export async function createForm(input:Record<string, any>, query: FilterQuery<C
     /* recive only formSchema fields */
     for (let key in formFields) {if(input.hasOwnProperty(key))_input[key] = input[key]};
 
+    var extraColumn:Record<string, any> = await ColumnModel.findOne({ _id: query.formId }, { createdAt: 0, updatedAt: 0, __v: 0, _id: 0 }).lean();
+    if (!extraColumn) return responsedata.message = _responce.noColumnsFound;
+    let extraAllColumnName:any = {};
+
     /* add if has extra columns fields */
     if (query.formId) {
-        const extraColumn:Record<string, any> = await ColumnModel.findOne({ _id: query.formId }, { createdAt: 0, updatedAt: 0, __v: 0, _id: 0 }).lean();
-        if (!extraColumn) return responsedata.message = _responce.noColumnsFound;
         /* extraColumn validation check */
         for (let key in extraColumn) {
+            extraAllColumnName[key] =key;
+            
             if (input.hasOwnProperty(key)) {
                 var validationMessage:Record<string, any> = {};
-
+                
                 if (typeof input[key] !== extraColumn[key].dataType) validationMessage.type = `${key} ${_responce.Typematch}`;
                 if (input[key].length < extraColumn[key].minLength) validationMessage.minLength= `${key} ${_responce.columMinLength} ${extraColumn[key].minLength}`;
                 if (input[key].length > extraColumn[key].maxLength) validationMessage.maxLength= `${key} ${_responce.columnMaxLength} ${extraColumn[key].maxLength}`;
@@ -32,6 +36,12 @@ export async function createForm(input:Record<string, any>, query: FilterQuery<C
         }; 
     };
 
+    //check if all extra column fill up or not?
+    for (let key in extraAllColumnName) {
+        if(_input.hasOwnProperty(key) || key==='formName'){
+            console.log('True')
+        }else{return responsedata.message = `${key} ${_responce.enterColumnInfo}` }
+    };
     return await FormModel.create(_input);
 };
 

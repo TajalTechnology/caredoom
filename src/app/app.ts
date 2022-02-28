@@ -1,10 +1,10 @@
 import config from 'config';
 import utils from '../common/services/utils';
 import deserializeUser from './common/middlewares/deserializeUser';
-// import swaggerDocs from './common/utils/swagger';
 import swaggerUI from 'swagger-ui-express';
 import swaggerDocument from '../app/common/utils/swagger.json';
-
+// var logger = require('../../src/common/services/logger')('mongoose');
+const port = config.get<number>("port");
 
 /* ----------------------------------- */
 /* Initializing Express App */
@@ -30,10 +30,6 @@ app.use(deserializeUser);
 utils.localService('mongoose', app);
 utils.middleware('body-parser', app);
 utils.middleware('api-response', app);
-
-const port = config.get<number>("port");
-// swaggerDocs(app, port);
-
 utils.middleware('routes', app);
 utils.localService('logger', app);
 utils.middleware('try-catch', app);
@@ -41,7 +37,7 @@ utils.middleware('try-catch', app);
 //swagger implementation
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-
 app.listen(port, () => {
+    // logger.info(`Express is listening at http://localhost:${port}`)
     return console.log(`Express is listening at http://localhost:${port}`);
 });

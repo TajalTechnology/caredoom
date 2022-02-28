@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "649bd619-2939-4f78-9a03-6aea83bf3891",
+		"name": "forms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Column",
+			"item": [
+				{
+					"name": "columns",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjE0YzhhNzIwOGFkYTBiMjMyNWRkNzQiLCJlbWFpbCI6Im1kNEBnbWFpbC5jb20iLCJuYW1lIjoiVGFqYWwgSXNsYW0iLCJjcmVhdGVkQXQiOiIyMDIyLTAyLTIyVDExOjI3OjM1LjkwM1oiLCJ1cGRhdGVkQXQiOiIyMDIyLTAyLTIyVDExOjI3OjM1LjkwM1oiLCJfX3YiOjAsInNlc3Npb24iOiI2MjFiMTA0YmNmM2RjNTY2NWNkM2FkMDkiLCJpYXQiOjE2NDU5NDA4MTEsImV4cCI6MTY3NzQ5ODQxMX0.eoHhVh3yEJm2ag8dfHrpcOYbb_YLE92W2UZLNyJDV9w9FWpJBtN4ARStI_q0DwIIIIQWrPo5thBnE2hwtKpGb-aGu0RgFObeJ6h8V79xfnqvb0aJok7HkXX-M6f-f-SmBa0tvcY6chKskKneDC4YJDEbsqRHKdonH98d5DDq0JY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjE0YzhhNzIwOGFkYTBiMjMyNWRkNzQiLCJlbWFpbCI6Im1kNEBnbWFpbC5jb20iLCJuYW1lIjoiVGFqYWwgSXNsYW0iLCJjcmVhdGVkQXQiOiIyMDIyLTAyLTIyVDExOjI3OjM1LjkwM1oiLCJ1cGRhdGVkQXQiOiIyMDIyLTAyLTIyVDExOjI3OjM1LjkwM1oiLCJfX3YiOjAsInNlc3Npb24iOiI2MjFiMTA0YmNmM2RjNTY2NWNkM2FkMDkiLCJpYXQiOjE2NDU5NDA4MTEsImV4cCI6MTY0NTk0NzcxMX0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"formName\": \"Digital mn6\",\n    \"columnOne\": {\n        \"columnName\": \"countryName\",\n        \"assignment\": \"auto\",\n        \"dataType\": \"string\",\n        \"maxLength\": \"40\",\n        \"minLength\": \"14\",\n        \"bSearch\": \"true\",\n        \"bDisplay\": \"true\",\n        \"bDisabled\": \"true\",\n        \"evaluationFormula\": \"true\"\n    },\n        \"columnTwo\": {\n        \"columnName\": \"districtName\",\n        \"assignment\": \"manual\",\n        \"dataType\": \"string\",\n        \"maxLength\": \"40\",\n        \"minLength\": \"4\",\n        \"bSearch\": \"true\",\n        \"bDisplay\": \"true\",\n        \"bDisabled\": \"true\",\n        \"evaluationFormula\": \"true\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/columns",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"columns"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "columns",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/columns",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"columns"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "columns/:columnsId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/columns/621b1c89d667b7b6700acac9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"columns",
+								"621b1c89d667b7b6700acac9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "columns",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/columns/6212a1eaa2ed5b70db6f892f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"columns",
+								"6212a1eaa2ed5b70db6f892f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "columns",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"formName\": \"Digital Bangladesh 3\",\n    \"columnOne\": {\n        \"columnName\": \"countryName\",\n        \"assignment\": \"auto\",\n        \"dataType\": \"string\",\n        \"maxLength\": \"40\",\n        \"minLength\": \"4\",\n        \"bSearch\": \"true\",\n        \"bDisplay\": \"true\",\n        \"bDisabled\": \"true\",\n        \"evaluationFormula\": \"true\"\n    },\n        \"columnTwo\": {\n        \"columnName\": \"districtName\",\n        \"assignment\": \"manual\",\n        \"dataType\": \"checkbox\",\n        \"maxLength\": \"40\",\n        \"minLength\": \"4\",\n        \"bSearch\": \"true\",\n        \"bDisplay\": \"false\",\n        \"bDisabled\": \"false\",\n        \"evaluationFormula\": \"true\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/columns/6212a2b7f30e97079c675818",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"columns",
+								"6212a2b7f30e97079c675818"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Form",
+			"item": [
+				{
+					"name": "forms",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Tajal Islam\",\n    \"email\": \"string@gmail.com\",\n    \"password\": \"string\",\n    \"again\":\"New coulum\",\n    \"columnOne\":\"column one fill up\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/forms/621cf680fc7c03c93bec8d12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"forms",
+								"621cf680fc7c03c93bec8d12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/forms/62137c928a799828c0f0c8e4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"forms",
+								"62137c928a799828c0f0c8e4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forms/:formId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/forms/62152e9f2ebf79aaaa0d0ef6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"forms",
+								"62152e9f2ebf79aaaa0d0ef6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forms/:formId",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Tajal Islam\",\n    \"email\": \"tajal@gmail.com\",\n    \"password\": \"string\",\n    \"again\":\"New coulum\",\n    \"columnOne\":\"Hi how are you\",\n    \"columnTwo\":\"This is string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/forms/62137ca08a799828c0f0c8e7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"forms",
+								"62137ca08a799828c0f0c8e7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/forms/:formId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/forms/62137ca08a799828c0f0c8e7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"forms",
+								"62137ca08a799828c0f0c8e7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "sessions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"123456\",\n    \"email\": \"md4@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/sessions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Tajal Islam\",\n    \"password\": \"123456\",\n    \"passwordConfirmation\": \"123456\",\n    \"email\": \"md4@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

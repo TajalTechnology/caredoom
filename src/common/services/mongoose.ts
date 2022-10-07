@@ -12,7 +12,7 @@ var dbURI = process.env.DB_URL;
 
 mongoose.connect(dbURI, function (err: any, db: any) {
   if (err) {
-    console.log("error");
+    console.log(err);
 
     logger.error("Unable to connect to the database:", err);
   } else {

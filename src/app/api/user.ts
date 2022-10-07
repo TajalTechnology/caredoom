@@ -3,10 +3,22 @@ import { NextFunction, Request, Response, Express } from "express";
 import {
   createUserInput,
   createUserSchema,
-  updateOtpSchema,
-  updateOtpInput,
+  verifyOtpSchema,
+  verifyOTPInput,
+  createLoginSchema,
+  createLoginInput,
+  resendOtpSchema,
+  resendOtpInput,
+  resetPasswordSchema,
+  resetPasswordInput,
 } from "../schemas/user.schema";
-import { createUser, updateOTP } from "./services/user.service";
+import {
+  createLogin,
+  createUser,
+  resendOtp,
+  resetPassword,
+  verifyOTP,
+} from "./services/user.service";
 
 /* try-catch handle */
 const tryCatch =
@@ -22,8 +34,26 @@ module.exports = function (router: Express) {
   );
   router.put(
     "/users/otp_verify",
-    validation(updateOtpSchema),
-    tryCatch(otpHandler)
+    validation(verifyOtpSchema),
+    tryCatch(verifyOtpHandler)
+  );
+
+  router.post(
+    "/users/login",
+    validation(createLoginSchema),
+    tryCatch(loginHandler)
+  );
+
+  router.put(
+    "/users/resend_otp",
+    validation(resendOtpSchema),
+    tryCatch(resendOtpHandler)
+  );
+
+  router.put(
+    "/users/password_reset",
+    validation(resetPasswordSchema),
+    tryCatch(passwordResetHandler)
   );
 };
 
@@ -37,14 +67,52 @@ async function createUserHandler(
   else return _res.apiDuplicate(response);
 }
 
-async function otpHandler(
-  _req: Request<{}, {}, updateOtpInput["body"]>,
+async function verifyOtpHandler(
+  _req: Request<{}, {}, verifyOTPInput["body"]>,
   _res: Record<string, any>
 ) {
-  const response = await updateOTP(_req.body as any, {
+  const response = await verifyOTP(_req.body as any, {
     new: true,
   });
 
   if (response.data) return _res.apiSuccess(response);
   else return _res.apiDataNotFound(response);
+}
+
+async function loginHandler(
+  _req: Request<{}, {}, createLoginInput["body"]>,
+  _res: Record<string, any>
+) {
+  const response: any = await createLogin(_req.body);
+
+  if (response.accessToken && response.refreshToken)
+    return _res.apiSuccess(response);
+  else return _res.apiDuplicate(response);
+}
+
+async function resendOtpHandler(
+  _req: Request<{}, {}, resendOtpInput["body"]>,
+  _res: Record<string, any>
+) {
+  const response: any = await resendOtp(_req.body as any, { new: true });
+
+  if (response.otp) return _res.apiSuccess(response);
+  else return _res.apiDataNotFound(response);
+}
+
+async function passwordResetHandler(
+  _req: Request<{}, {}, resetPasswordInput["body"]>,
+  _res: Record<string, any>
+) {
+  const otpVerify: any = await verifyOTP(_req.body as any, {
+    new: true,
+  });
+
+  if (otpVerify) {
+    const response: any = await resetPassword(_req.body as any, {
+      new: true,
+    });
+    if (response.data) return _res.apiSuccess(response);
+    else return _res.apiDataNotFound(otpVerify);
+  } else return _res.apiDataNotFound(otpVerify);
 }

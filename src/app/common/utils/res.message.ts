@@ -39,6 +39,7 @@ const _responce = {
   otpLength: "Otp length should be 6 characters",
   userIdRequired: "Should be define user id",
   verificationFailed: "Otp bverification failed",
+  passwordUpdateFailed: "Password update failed",
 };
 
 export default _responce;

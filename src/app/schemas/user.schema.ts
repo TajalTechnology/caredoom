@@ -48,7 +48,8 @@ const otpPayload = {
   body: object({
     email: z.string().email(),
     phnNo: z.string().min(9).max(11),
-    verificationCode: z.number({ required_error: _responce.otpRequired }),
+    // TODO: required not working
+    verificationCode: z.number(),
   })
     .partial()
     .refine(({ email, phnNo }) => email !== undefined || phnNo !== undefined, {
@@ -56,11 +57,55 @@ const otpPayload = {
     }),
 };
 
-// const params = {
-//   params: object({
-//     _id: z.string({ required_error: _responce.userIdRequired }),
-//   }),
-// };
+export const verifyOtpSchema = object({ ...otpPayload });
+export type verifyOTPInput = TypeOf<typeof verifyOtpSchema>;
 
-export const updateOtpSchema = object({ ...otpPayload });
-export type updateOtpInput = TypeOf<typeof updateOtpSchema>;
+/**
+ * ***************login schema******************
+ */
+
+const loginPayload = {
+  body: object({
+    password: z.string().min(6).max(32),
+    email: z.string().email(),
+    phnNo: z.string().min(9).max(11),
+  })
+    .partial()
+    .refine(({ email, phnNo }) => email !== undefined || phnNo !== undefined, {
+      message: "email should be set if phone number isn't",
+    }),
+};
+
+export const createLoginSchema = object({ ...loginPayload });
+export type createLoginInput = TypeOf<typeof createLoginSchema>;
+
+/**
+ * ***************login schema******************
+ */
+
+const resendOtpPayload = {
+  body: object({
+    email: z.string().email(),
+    phnNo: z.string().min(9).max(11),
+  })
+    .partial()
+    .refine(({ email, phnNo }) => email !== undefined || phnNo !== undefined, {
+      message: "email should be set if phone number isn't",
+    }),
+};
+
+export const resendOtpSchema = object({ ...resendOtpPayload });
+export type resendOtpInput = TypeOf<typeof resendOtpSchema>;
+
+const passwordPayload = {
+  body: object({
+    password: z.string().min(6).max(32),
+    passwordConfirmation: z.string().min(6).max(32),
+  }),
+};
+
+export const resetPasswordSchema = object({
+  ...resendOtpPayload,
+  ...passwordPayload,
+});
+export type resetPasswordInput = TypeOf<typeof resetPasswordSchema>;

@@ -86,9 +86,9 @@
       }
     },
 
-    "/sessions": {
+    "/users/login": {
       "post": {
-        "tags": ["Session"],
+        "tags": ["Users"],
         "summary": "Create new user in system",
         "description": "Create new user in system",
         "parameters": [
@@ -162,13 +162,20 @@
       "properties": {
         "email": {
           "type": "string",
-          "required": true,
           "example": "mdtajalislam1189@gmail.com"
+        },
+        "phnNo": {
+          "type": "string",
+          "example": "01883950739"
         },
         "password": {
           "type": "string",
           "required": true,
           "example": "123456"
+        },
+        "isRemember": {
+          "type": "boolean",
+          "example": "false"
         }
       }
     }

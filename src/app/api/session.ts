@@ -1,6 +1,9 @@
 import validation from "../common/middlewares/validation";
 import { NextFunction, Request, Response, Express } from "express";
-import { createSessionSchema } from "../schemas/session.schema";
+import {
+  createSessionInput,
+  createSessionSchema,
+} from "../schemas/session.schema";
 import { validatePassword } from "./services/user.service";
 import { signJwt } from "../common/utils/jwt";
 import config from "config";
@@ -21,9 +24,12 @@ module.exports = function (router: Express) {
   );
 };
 
-async function createSessionHandler(_req: Request, _res: Record<string, any>) {
+async function createSessionHandler(
+  _req: Request<{}, {}, createSessionInput["body"]>,
+  _res: Record<string, any>
+) {
   // Validate the user's password & create session
-  const user = await validatePassword(_req.body);
+  const user = await validatePassword(_req.body as any);
   if (!user) return _res.status(401).send(_responce.invalidUsernamePassword);
   const session = await createSession(user._id, _req.get("user-agent") || "");
 

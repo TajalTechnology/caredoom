@@ -1,6 +1,6 @@
-var logger = require('./logger')('mongoose');
-var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
+var logger = require("./logger")("mongoose");
+var mongoose = require("mongoose");
+mongoose.Promise = require("bluebird");
 mongoose.Promise.config({
   poolSize: 10,
   warnings: {
@@ -11,17 +11,23 @@ mongoose.Promise.config({
 var dbURI = process.env.DB_URL;
 
 mongoose.connect(dbURI, function (err: any, db: any) {
-
   if (err) {
-    logger.error('Unable to connect to the database:', err);
+    console.log("error");
+
+    logger.error("Unable to connect to the database:", err);
   } else {
-    console.log('Database Connection has been established successfully.')
+    console.log("ok");
+
+    logger.info("Database Connection has been established successfully.");
     // mongoose.DATABASE_EXPORT = db;
     // logger.info('Database Connection has been established successfully.');
   }
 });
 
-mongoose.Model.handleResponse = function (_promise: { spread: (arg0: (_record: any, _status: any) => void) => any; }, _res: { apiSuccess: (arg0: any) => void; }) {
+mongoose.Model.handleResponse = function (
+  _promise: { spread: (arg0: (_record: any, _status: any) => void) => any },
+  _res: { apiSuccess: (arg0: any) => void }
+) {
   var model = this;
   return _promise.spread(function (_record, _status) {
     /* eslint-disable indent */
@@ -44,7 +50,10 @@ mongoose.Model.handleResponse = function (_promise: { spread: (arg0: (_record: a
   });
 };
 
-mongoose.Model.handleDoesNotExistsCatch = function (_promise: Promise<any>, _res: any) {
+mongoose.Model.handleDoesNotExistsCatch = function (
+  _promise: Promise<any>,
+  _res: any
+) {
   var model = this;
   return _promise.catch(function (_error) {
     console.log(_error);
@@ -52,7 +61,10 @@ mongoose.Model.handleDoesNotExistsCatch = function (_promise: Promise<any>, _res
   });
 };
 
-mongoose.Model.handleAlreadyExistsCatch = function (_promise: Promise<any>, _res: any) {
+mongoose.Model.handleAlreadyExistsCatch = function (
+  _promise: Promise<any>,
+  _res: any
+) {
   var model = this;
   return _promise.catch(function (_error) {
     console.log(_error);
@@ -60,7 +72,10 @@ mongoose.Model.handleAlreadyExistsCatch = function (_promise: Promise<any>, _res
   });
 };
 
-mongoose.Model.handleEmptyResponseCatch = function (_promise: Promise<any>, _res: any) {
+mongoose.Model.handleEmptyResponseCatch = function (
+  _promise: Promise<any>,
+  _res: any
+) {
   var model = this;
   return _promise.catch(function (_error) {
     console.log(_error);
@@ -69,11 +84,11 @@ mongoose.Model.handleEmptyResponseCatch = function (_promise: Promise<any>, _res
 };
 
 mongoose.Model.titleCase = function (string: string) {
-  var split = string.toLowerCase().split(' ');
+  var split = string.toLowerCase().split(" ");
   for (var i = 0; i < split.length; i++) {
     split[i] = split[i].charAt(0).toUpperCase() + split[i].substring(1);
   }
-  return split.join(' ');
+  return split.join(" ");
 };
 
 module.exports = mongoose;

@@ -37,7 +37,7 @@
       "post": {
         "tags": ["Users"],
         "summary": "Create new user in system",
-        "description": "Create new user in system",
+        "description": "New description in bangla\n new another line",
         "parameters": [
           {
             "name": "user",
@@ -54,6 +54,32 @@
             "description": "New user is created",
             "schema": {
               "$ref": "#/definitions/UserModel"
+            }
+          }
+        }
+      }
+    },
+    "/users/otp_verify": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Create new user in system",
+        "description": "New description in bangla\n new another line",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/OtpModel"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Otp updated",
+            "schema": {
+              "$ref": "#/definitions/OtpModel"
             }
           }
         }
@@ -85,339 +111,64 @@
           }
         }
       }
-    },
-    "/columns": {
-      "post": {
-        "tags": ["Columns"],
-        "summary": "Create extra column for new form",
-        "description": "Create colum for form",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "Extra column create for form",
-            "schema": {
-              "$ref": "#/definitions/ColumnModel"
-            }
-          }
-        ],
-        "produces": ["application/json"],
-        "responses": {
-          "201": {
-            "description": "New Colum is created",
-            "schema": {
-              "$ref": "#/definitions/ColumnModel"
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": ["Columns"],
-        "summary": "get all extra column list",
-        "description": "all extra column list",
-        "parameters": [],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "List of colum for form",
-            "schema": {
-              "$ref": "#/definitions/ColumnModel"
-            }
-          }
-        }
-      }
-    },
-    "/columns/{columnsId}": {
-      "put": {
-        "tags": ["Columns"],
-        "summary": "Create extra column for new form",
-        "description": "Create colum for form",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "Extra column create for form",
-            "schema": {
-              "$ref": "#/definitions/ColumnModel"
-            }
-          },
-          {
-            "name": "columnsId",
-            "in": "path",
-            "description": "columnsId of the column",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "produces": ["application/json"],
-        "responses": {
-          "201": {
-            "description": "New Colum is created",
-            "schema": {
-              "$ref": "#/definitions/ColumnModel"
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": ["Columns"],
-        "summary": "get a single extra column list for a form",
-        "description": "a single column list",
-        "parameters": [
-          {
-            "name": "columnsId",
-            "in": "path",
-            "description": "columnsId of the column",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "List of colum for a single form",
-            "schema": {
-              "$ref": "#/definitions/ColumnModel"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Columns"],
-        "summary": "Delete  by columnsId",
-        "parameters": [
-          {
-            "name": "columnsId",
-            "in": "path",
-            "description": "columnsId of the columns",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/forms/{formId}": {
-      "post": {
-        "tags": ["Forms"],
-        "summary": "Create extra column for new form",
-        "description": "Create colum for form",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "Extra column create for form",
-            "schema": {
-              "$ref": "#/definitions/FormModel"
-            }
-          },
-          {
-            "name": "formId",
-            "in": "path",
-            "description": "formId means the id of extra column",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "produces": ["application/json"],
-        "responses": {
-          "201": {
-            "description": "New Form is created",
-            "schema": {
-              "$ref": "#/definitions/FormModel"
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": ["Forms"],
-        "summary": "get a single extra column list for a form",
-        "description": "a single column list",
-        "parameters": [
-          {
-            "name": "formId",
-            "in": "path",
-            "description": "formId means the of form which we want to get",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "List of colum for a single form",
-            "schema": {
-              "$ref": "#/definitions/FormModel"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Forms"],
-        "summary": "Delete  by formId",
-        "parameters": [
-          {
-            "name": "formId",
-            "in": "path",
-            "description": "formId means the of form which we want to delete",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": ["Forms"],
-        "summary": "Update extra column for new form",
-        "description": "Update colum for form",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "form update body",
-            "schema": {
-              "$ref": "#/definitions/FormModel"
-            }
-          },
-          {
-            "name": "formId",
-            "in": "path",
-            "description": "formId means the id which we want to update",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "produces": ["application/json"],
-        "responses": {
-          "201": {
-            "description": "Form is updated",
-            "schema": {
-              "$ref": "#/definitions/FormModel"
-            }
-          }
-        }
-      }
-    },
-    "/forms": {
-      "get": {
-        "tags": ["Forms"],
-        "summary": "get all forms with data list",
-        "description": "all forms with data list",
-        "parameters": [],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "List of all forms with data list",
-            "schema": {
-              "$ref": "#/definitions/FormModel"
-            }
-          }
-        }
-      }
     }
   },
   "definitions": {
     "UserModel": {
-      "required": ["name", "email", "password", "passwordConfirmation"],
-      "properties": {
-        "name": {
-          "type": "string",
-          "examples": ["Md Tajal Islam"]
-        },
-        "email": {
-          "type": "string",
-          "examples": ["string@gmail.com"]
-        },
-        "password": {
-          "type": "string",
-          "examples": ["123456"]
-        },
-        "passwordConfirmation": {
-          "type": "string",
-          "examples": ["123456"]
-        }
-      }
-    },
-
-    "SessionModel": {
-      "required": ["email", "password"],
-      "properties": {
-        "email": {
-          "type": "string",
-          "examples": ["string@gmail.com"]
-        },
-        "password": {
-          "type": "string",
-          "examples": ["123456"]
-        }
-      }
-    },
-
-    "ColumnModel": {
-      "required": ["formName"],
-      "properties": {
-        "formName": {
-          "type": "string",
-          "examples": ["New Form"]
-        },
-        "columnOne": {
-          "type": "object",
-          "examples": {
-            "columnName": "countryName",
-            "assignment": "auto",
-            "dataType": "string",
-            "maxLength": "40",
-            "minLength": "4",
-            "bSearch": "true",
-            "bDisplay": "true",
-            "bDisabled": "true",
-            "evaluationFormula": "true"
-          }
-        },
-        "columnTwo": {
-          "type": "object",
-          "examples": {
-            "columnName": "districtName",
-            "assignment": "manual",
-            "dataType": "string",
-            "maxLength": "40",
-            "minLength": "4",
-            "bSearch": "true",
-            "bDisplay": "true",
-            "bDisabled": "true",
-            "evaluationFormula": "true"
-          }
-        }
-      }
-    },
-    "FormModel": {
-      "required": ["username", "email", "password"],
+      "type": "object",
       "properties": {
         "username": {
           "type": "string",
-          "examples": ["Md Tajal Islam"]
+          "example": "Md Tajal Islam"
         },
         "email": {
           "type": "string",
-          "examples": ["mdtajalislam1189@gmail.com"]
+          "example": "mdtajalislam1189@gmail.com"
+        },
+        "phnNo": {
+          "type": "string",
+          "example": "01883950739"
         },
         "password": {
           "type": "string",
-          "examples": ["123456"]
+          "example": "123456",
+          "required": true
+        },
+        "passwordConfirmation": {
+          "type": "string",
+          "examples": "123456"
+        }
+      }
+    },
+    "OtpModel": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "mdtajalislam1189@gmail.com"
+        },
+        "phnNo": {
+          "type": "string",
+          "example": "01883950739"
+        },
+        "verificationCode": {
+          "type": "number",
+          "example": "123456"
+        }
+      }
+    },
+    "SessionModel": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "required": true,
+          "example": "mdtajalislam1189@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "required": true,
+          "example": "123456"
         }
       }
     }

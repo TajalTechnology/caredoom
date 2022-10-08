@@ -5,12 +5,15 @@ import _responce from "../../common/utils/res.message";
 import LoginModel from "../../models/login.model";
 import { signJwt } from "../../common/utils/jwt";
 import config from "config";
+import bcrypt from "bcrypt";
 
 export async function createUser(input: Record<string, any>) {
   const responseData: any = {};
 
+  //TODO: findOne with multiple condition not working
+  //TODO: should be send code as usuall
   const duplicateUser = await UserModel.findOne({
-    $or: [{ email: input.email }, { phnNo: input.phnNo }],
+    $or: [{ phnNo: input.phnNo }, { email: input.email }],
   });
 
   !duplicateUser
@@ -126,13 +129,22 @@ export async function resetPassword(
   options: QueryOptions
 ) {
   const responseData: any = {};
-
+  const hash = bcrypt.hashSync(
+    input.password,
+    await bcrypt.genSalt(config.get<number>("saltWorkFactor"))
+  );
   const filter = {
-    $or: [{ email: input.email }, { phnNo: input.phnNo }],
+    $and: [
+      { $or: [{ email: input.email }, { phnNo: input.phnNo }] },
+      { isVerify: true },
+    ],
   };
-  const update = { verificationCode: null, isVerify: true };
+  const update = {
+    verificationCode: null,
+    isVerify: true,
+    password: (input.password = hash),
+  };
   const user = await UserModel.findOneAndUpdate(filter, update, options);
-
   user
     ? (responseData.data = true)
     : (responseData.message = _responce.passwordUpdateFailed);

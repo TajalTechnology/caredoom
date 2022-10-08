@@ -33,11 +33,11 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
-    "/users": {
+    "/users/registration": {
       "post": {
         "tags": ["Users"],
-        "summary": "Create new user in system",
-        "description": "New description in bangla\n new another line",
+        "summary": "Create new user and send code to user",
+        "description": "*Create user with phn or email \n *Response with verification code.Use this code to verify",
         "parameters": [
           {
             "name": "user",
@@ -62,7 +62,7 @@
     "/users/otp_verify": {
       "put": {
         "tags": ["Users"],
-        "summary": "Create new user in system",
+        "summary": "Verify otp",
         "description": "New description in bangla\n new another line",
         "parameters": [
           {
@@ -85,7 +85,32 @@
         }
       }
     },
-
+    "/users/password_set": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Set password after verification",
+        "description": "Set password after verification",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/PasswordSetModel"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/SessionModel"
+            }
+          }
+        }
+      }
+    },
     "/users/login": {
       "post": {
         "tags": ["Users"],
@@ -117,10 +142,6 @@
     "UserModel": {
       "type": "object",
       "properties": {
-        "username": {
-          "type": "string",
-          "example": "Md Tajal Islam"
-        },
         "email": {
           "type": "string",
           "example": "mdtajalislam1189@gmail.com"
@@ -129,14 +150,15 @@
           "type": "string",
           "example": "01883950739"
         },
-        "password": {
+        "ownGender": {
           "type": "string",
-          "example": "123456",
+          "example": "Male",
           "required": true
         },
-        "passwordConfirmation": {
+        "findGender": {
           "type": "string",
-          "examples": "123456"
+          "example": "Male",
+          "required": true
         }
       }
     },
@@ -172,6 +194,32 @@
           "type": "string",
           "required": true,
           "example": "123456"
+        },
+        "isRemember": {
+          "type": "boolean",
+          "example": "false"
+        }
+      }
+    },
+    "PasswordSetModel": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "mdtajalislam1189@gmail.com"
+        },
+        "phnNo": {
+          "type": "string",
+          "example": "01883950739"
+        },
+        "password": {
+          "type": "string",
+          "example": "123456",
+          "required": true
+        },
+        "passwordConfirmation": {
+          "type": "string",
+          "examples": "123456"
         },
         "isRemember": {
           "type": "boolean",

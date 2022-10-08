@@ -3,31 +3,14 @@ import _responce from "../common/utils/res.message";
 
 const userPayload = {
   body: object({
-    username: z.string(),
-    password: z.string().min(6).max(32),
-    passwordConfirmation: z.string().min(6).max(32),
     email: z.string().email(),
     phnNo: z.string().min(9).max(11),
     ownGender: z.string(),
     findGender: z.string(),
-    isRemember: z.boolean(),
   })
     .partial()
-    .superRefine((data, ctx) => {
-      if (data.password !== data.passwordConfirmation) {
-        ctx.addIssue({
-          code: ZodIssueCode.custom,
-          path: ["password"],
-          message: "password and passwordConfirmation didn't match",
-        });
-      }
-      if (!data.email && !data.phnNo) {
-        ctx.addIssue({
-          code: ZodIssueCode.custom,
-          path: ["email"],
-          message: "email should be set if phone number isn't",
-        });
-      }
+    .refine(({ email, phnNo }) => email !== undefined || phnNo !== undefined, {
+      message: "email should be set if phone number isn't",
     }),
 };
 

@@ -23,10 +23,10 @@ export interface UserDocument extends UserInput, mongoose.Document {
 
 const userSchema = new mongoose.Schema(
   {
-    phnNo: { type: String, unique: true },
+    phnNo: { type: String },
     email: { type: String },
     username: { type: String },
-    password: { type: String, required: true },
+    password: { type: String },
     ownGender: { type: String, required: true },
     findGender: { type: String, required: true },
     isVerify: { type: Boolean, required: true, default: false },

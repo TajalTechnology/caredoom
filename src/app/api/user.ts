@@ -28,10 +28,23 @@ const tryCatch =
 /* all routes */
 module.exports = function (router: Express) {
   router.post(
-    "/users",
+    "/users/registration",
     validation(createUserSchema),
     tryCatch(createUserHandler)
   );
+
+  router.put(
+    "/users/resend_otp",
+    validation(resendOtpSchema),
+    tryCatch(resendOtpHandler)
+  );
+
+  router.put(
+    "/users/password_set",
+    validation(resetPasswordSchema),
+    tryCatch(setPasswordHandler)
+  );
+
   router.put(
     "/users/otp_verify",
     validation(verifyOtpSchema),
@@ -42,18 +55,6 @@ module.exports = function (router: Express) {
     "/users/login",
     validation(createLoginSchema),
     tryCatch(loginHandler)
-  );
-
-  router.put(
-    "/users/resend_otp",
-    validation(resendOtpSchema),
-    tryCatch(resendOtpHandler)
-  );
-
-  router.put(
-    "/users/password_reset",
-    validation(resetPasswordSchema),
-    tryCatch(passwordResetHandler)
   );
 };
 
@@ -100,19 +101,24 @@ async function resendOtpHandler(
   else return _res.apiDataNotFound(response);
 }
 
-async function passwordResetHandler(
+async function setPasswordHandler(
   _req: Request<{}, {}, resetPasswordInput["body"]>,
   _res: Record<string, any>
 ) {
-  const otpVerify: any = await verifyOTP(_req.body as any, {
+  const response: any = await resetPassword(_req.body as any, {
     new: true,
   });
+  if (response.data) return _res.apiSuccess(response);
+  else return _res.apiDataNotFound(response);
+  // const otpVerify: any = await verifyOTP(_req.body as any, {
+  //   new: true,
+  // });
 
-  if (otpVerify) {
-    const response: any = await resetPassword(_req.body as any, {
-      new: true,
-    });
-    if (response.data) return _res.apiSuccess(response);
-    else return _res.apiDataNotFound(otpVerify);
-  } else return _res.apiDataNotFound(otpVerify);
+  // if (otpVerify) {
+  //   const response: any = await resetPassword(_req.body as any, {
+  //     new: true,
+  //   });
+  //   if (response.data) return _res.apiSuccess(response);
+  //   else return _res.apiDataNotFound(otpVerify);
+  // } else return _res.apiDataNotFound(otpVerify);
 }

@@ -12,9 +12,10 @@ export async function createUser(input: Record<string, any>) {
 
   //TODO: findOne with multiple condition not working
   //TODO: should be send code as usuall
-  const duplicateUser = await UserModel.findOne({
-    $or: [{ phnNo: input.phnNo }, { email: input.email }],
-  });
+  const duplicateUser = await UserModel.findOne({ phnNo: input.phnNo });
+  // const duplicateUser = await UserModel.findOne({
+  //   $or: [{ phnNo: input.phnNo }, { email: input.email }],
+  // });
 
   !duplicateUser
     ? (responseData.data = await UserModel.create(input))

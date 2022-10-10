@@ -40,6 +40,3 @@
         }, // ...
     ]
 } -->
-<!-- reset password -->
-<!-- forgot password -->
-<!-- signin with code -->

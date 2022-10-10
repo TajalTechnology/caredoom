@@ -10,12 +10,18 @@ import bcrypt from "bcrypt";
 export async function createUser(input: Record<string, any>) {
   const responseData: any = {};
 
-  //TODO: findOne with multiple condition not working
-  //TODO: should be send code as usuall
-  const duplicateUser = await UserModel.findOne({ phnNo: input.phnNo });
-  // const duplicateUser = await UserModel.findOne({
-  //   $or: [{ phnNo: input.phnNo }, { email: input.email }],
-  // });
+  //TODO: need to optimize this query
+
+  let duplicateUser: any;
+  if (input.email && !input.phnNo) {
+    duplicateUser = await UserModel.findOne({ email: input.email });
+  } else if (!input.email && input.phnNo) {
+    duplicateUser = await UserModel.findOne({ phnNo: input.phnNo });
+  } else {
+    duplicateUser = await UserModel.findOne({
+      $or: [{ email: input.email }, { phnNo: input.phnNo }],
+    });
+  }
 
   !duplicateUser
     ? (responseData.data = await UserModel.create(input))

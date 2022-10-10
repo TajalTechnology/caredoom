@@ -136,6 +136,32 @@
           }
         }
       }
+    },
+    "/users/resend_otp": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Create new user in system",
+        "description": "Create new user in system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/ResendModel"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/ResendModel"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -224,6 +250,19 @@
         "isRemember": {
           "type": "boolean",
           "example": "false"
+        }
+      }
+    },
+    "ResendModel": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "mdtajalislam1189@gmail.com"
+        },
+        "phnNo": {
+          "type": "string",
+          "example": "01883950739"
         }
       }
     }

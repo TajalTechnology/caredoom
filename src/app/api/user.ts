@@ -34,12 +34,6 @@ module.exports = function (router: Express) {
   );
 
   router.put(
-    "/users/resend_otp",
-    validation(resendOtpSchema),
-    tryCatch(resendOtpHandler)
-  );
-
-  router.put(
     "/users/password_set",
     validation(resetPasswordSchema),
     tryCatch(setPasswordHandler)
@@ -55,6 +49,12 @@ module.exports = function (router: Express) {
     "/users/login",
     validation(createLoginSchema),
     tryCatch(loginHandler)
+  );
+
+  router.put(
+    "/users/resend_otp",
+    validation(resendOtpSchema),
+    tryCatch(resendOtpHandler)
   );
 };
 

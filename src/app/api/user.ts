@@ -75,8 +75,7 @@ async function verifyOtpHandler(
   const response = await verifyOTP(_req.body as any, {
     new: true,
   });
-
-  if (response.data) return _res.apiSuccess(response);
+  if (response.sucess) return _res.apiSuccess(response);
   else return _res.apiDataNotFound(response);
 }
 

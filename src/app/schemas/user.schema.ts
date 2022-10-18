@@ -32,7 +32,7 @@ const otpPayload = {
     email: z.string().email(),
     phnNo: z.string().min(9).max(11),
     // TODO: required not working
-    verificationCode: z.number(),
+    verificationCode: z.string(),
   })
     .partial()
     .refine(({ email, phnNo }) => email !== undefined || phnNo !== undefined, {

@@ -36,20 +36,37 @@ export async function verifyOTP(
 ) {
   const responseData: any = {};
 
-  const filter = {
-    $and: [
-      {
-        $or: [{ email: input.email }, { phnNo: input.phnNo }],
-      },
-      { verificationCode: input.verificationCode },
-    ],
-  };
+  let filter: any;
+  if (input.email && !input.phnNo) {
+    filter = {
+      $and: [
+        { email: input.email },
+        { verificationCode: input.verificationCode },
+      ],
+    };
+  } else if (!input.email && input.phnNo) {
+    filter = {
+      $and: [
+        { phnNo: input.phnNo },
+        { verificationCode: input.verificationCode },
+      ],
+    };
+  } else {
+    filter = {
+      $and: [
+        { phnNo: input.phnNo },
+        { email: input.email },
+        { verificationCode: input.verificationCode },
+      ],
+    };
+  }
+
   const update = { verificationCode: null, isVerify: true };
   const user = await UserModel.findOneAndUpdate(filter, update, options);
 
   user
-    ? (responseData.data = true)
-    : (responseData.message = _responce.verificationFailed);
+    ? (responseData.sucess = _responce.verificationSucess)
+    : (responseData.failed = _responce.verificationFailed);
 
   return responseData;
 }

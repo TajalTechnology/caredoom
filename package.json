@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./dist && tsc",
+    "builds": "rimraf ./dist && tsc",
+    "build": "ts-node-dev --respawn --transpile-only server.ts --output public",
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
     "test": "jest"
   },

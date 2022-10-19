@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
     ownGender: { type: String, required: true },
     findGender: { type: String, required: true },
     isVerify: { type: Boolean, required: true, default: false },
-    verificationCode: { type: String, default: 123456 },
+    verificationCode: { type: String, default: "123456" },
     isRemember: { type: Boolean, required: true, default: false },
     verifyTimeLimit: { type: Number, required: true, default: 60 },
   },

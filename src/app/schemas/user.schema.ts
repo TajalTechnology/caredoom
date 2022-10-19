@@ -14,7 +14,6 @@ const userPayload = {
     }),
 };
 
-userPayload;
 /* create user */
 export const createUserSchema = object({ ...userPayload });
 export type createUserInput = Omit<
@@ -32,7 +31,7 @@ const otpPayload = {
     email: z.string().email(),
     phnNo: z.string().min(9).max(11),
     // TODO: required not working
-    verificationCode: z.string(),
+    verificationCode: z.string({ invalid_type_error: "SHould be string" }),
   })
     .partial()
     .refine(({ email, phnNo }) => email !== undefined || phnNo !== undefined, {

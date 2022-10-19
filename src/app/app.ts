@@ -29,6 +29,11 @@ app.use(function (
   );
   next();
 });
+
+app.use("/", (req: any, res: any) => {
+  res.json({ message: "Hello From Express App" });
+});
+
 app.use(deserializeUser);
 
 /* ----------------------------------- */

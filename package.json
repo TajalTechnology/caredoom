@@ -1,9 +1,9 @@
 {
   "name": "dynamic-form",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "builds": "rimraf ./dist && tsc",
+    "builds": "tsc",
     "build": "ts-node-dev --respawn --transpile-only server.ts --output public",
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
     "test": "jest"

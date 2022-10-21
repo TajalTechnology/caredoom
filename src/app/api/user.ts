@@ -96,7 +96,7 @@ async function resendOtpHandler(
 ) {
   const response: any = await resendOtp(_req.body as any, { new: true });
 
-  if (response.otp) return _res.apiSuccess(response);
+  if (response.verificationCode) return _res.apiSuccess(response);
   else return _res.apiDataNotFound(response);
 }
 

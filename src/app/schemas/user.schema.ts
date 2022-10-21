@@ -48,14 +48,20 @@ export type verifyOTPInput = TypeOf<typeof verifyOtpSchema>;
 
 const loginPayload = {
   body: object({
-    password: z.string().min(6).max(32),
+    password: z.string(),
     email: z.string().email(),
-    phnNo: z.string().min(9).max(11),
+    phnNo: z.string(),
+    username: z.string(),
   })
     .partial()
-    .refine(({ email, phnNo }) => email !== undefined || phnNo !== undefined, {
-      message: "email should be set if phone number isn't",
-    }),
+    .refine(
+      ({ email, phnNo, username }) =>
+        email !== undefined || phnNo !== undefined || username !== undefined,
+      {
+        message:
+          "Enter atlest one of them from email, phone number or username",
+      }
+    ),
 };
 
 export const createLoginSchema = object({ ...loginPayload });

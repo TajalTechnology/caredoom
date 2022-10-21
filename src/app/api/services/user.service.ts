@@ -63,6 +63,7 @@ export async function verifyOTP(
 
   const update = { verificationCode: null, isVerify: true };
   const user = await UserModel.findOneAndUpdate(filter, update, options);
+  console.log(user);
 
   user
     ? (responseData.sucess = _responce.verificationSucess)
@@ -73,12 +74,26 @@ export async function verifyOTP(
 
 export async function createLogin(input: Record<string, any>) {
   const responseData: any = {};
+  const loginWith = input.email
+    ? input.email
+    : input.phnNo
+    ? input.phnNo
+    : input.username;
 
   const user: any = await UserModel.findOne({
-    $or: [{ email: input.email }, { phnNo: input.phnNo }],
+    $or: [{ email: loginWith }, { phnNo: loginWith }, { username: loginWith }],
   });
-  const validPassword = await user.comparePassword(input.password);
-  if (user && validPassword) {
+
+  if (!user) {
+    return (responseData.message = "Can not find account");
+  }
+
+  //TODO: shoud be implementing as a differenct function
+  const valid = await bcrypt
+    .compare(input.password, user.password)
+    .catch((e) => false);
+
+  if (valid) {
     const login = await LoginModel.create({ user: user._id });
 
     // create an access token
@@ -97,17 +112,8 @@ export async function createLogin(input: Record<string, any>) {
       return (responseData.data = { accessToken, refreshToken });
     }
   }
-  return (responseData.message = "Login failed");
 
-  // const duplicateUser = await UserModel.findOne({
-  //   $or: [{ email: input.email }, { phnNo: input.phnNo }],
-  // });
-
-  // !duplicateUser
-  //   ? (responseData.data = await UserModel.create(input))
-  //   : (responseData.message = _responce.duplicateUser);
-
-  // return responseData;
+  return (responseData.message = "Incorrect account or password");
 }
 
 export async function resendOtp(
@@ -117,13 +123,17 @@ export async function resendOtp(
   const responseData: any = {};
   let otp = "123457";
 
+  const otpSend = input.email ? input.email : input.phnNo;
   const filter = {
-    $or: [{ email: input.email }, { phnNo: input.phnNo }],
+    $or: [{ email: otpSend }, { phnNo: otpSend }],
   };
   const update = { verificationCode: otp };
   const user = await UserModel.findOneAndUpdate(filter, update, options);
+
   // TODO: need to send code in mail
-  otp ? (responseData.otp = otp) : (responseData.message = "Otp resend failed");
+  user
+    ? (responseData.verificationCode = user.verificationCode)
+    : (responseData.message = "Otp resend failed");
   return responseData;
 }
 

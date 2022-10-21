@@ -200,7 +200,7 @@
           "example": "01883950739"
         },
         "verificationCode": {
-          "type": "number",
+          "type": "string",
           "example": "123456"
         }
       }

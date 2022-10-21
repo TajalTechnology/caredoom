@@ -54,7 +54,16 @@ userSchema.methods.comparePassword = async function (
   candidatePassword: string
 ): Promise<boolean> {
   const user = this as UserDocument;
-  return bcrypt.compare(candidatePassword, user.password).catch((e) => false);
+  console.log("From modal", user);
+
+  // console.log("user from becrept", candidatePassword, user.password);
+
+  const valid = await bcrypt
+    .compare(candidatePassword, user.password)
+    .catch((e) => false);
+  console.log("isValid:", valid);
+
+  return valid;
 };
 
 const UserModel = mongoose.model<UserDocument>("User", userSchema);

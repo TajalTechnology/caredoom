@@ -4,7 +4,9 @@ import _responce from "../common/utils/res.message";
 const userPayload = {
   body: object({
     email: z.string().email(),
-    phnNo: z.string().min(9).max(11),
+    phnNo: z
+      .string()
+      .length(10, { message: "Phone number should be 10 characters" }),
     ownGender: z.string(),
     findGender: z.string(),
   })

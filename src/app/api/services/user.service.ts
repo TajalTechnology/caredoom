@@ -9,9 +9,8 @@ import bcrypt from "bcrypt";
 
 export async function createUser(input: Record<string, any>) {
   const responseData: any = {};
-
+  if (input.phnNo) input.phnNo = "+880" + input.phnNo;
   //TODO: need to optimize this query
-
   let duplicateUser: any;
   if (input.email && !input.phnNo) {
     duplicateUser = await UserModel.findOne({ email: input.email });
@@ -34,94 +33,102 @@ export async function verifyOTP(
   input: UpdateQuery<UserDocument>,
   options: QueryOptions
 ) {
+  if (input.phnNo) input.phnNo = "+880" + input.phnNo;
+
   const responseData: any = {};
-
-  let filter: any;
-  if (input.email && !input.phnNo) {
-    filter = {
-      $and: [
-        { email: input.email },
-        { verificationCode: input.verificationCode },
-      ],
-    };
-  } else if (!input.email && input.phnNo) {
-    filter = {
-      $and: [
-        { phnNo: input.phnNo },
-        { verificationCode: input.verificationCode },
-      ],
-    };
-  } else {
-    filter = {
-      $and: [
-        { phnNo: input.phnNo },
-        { email: input.email },
-        { verificationCode: input.verificationCode },
-      ],
-    };
-  }
-
+  const verifyWith = input.email ? input.email : input.phnNo;
+  const filter = {
+    $and: [
+      { $or: [{ email: verifyWith }, { phnNo: verifyWith }] },
+      {
+        $or: [{ verificationCode: input.verificationCode }, { isVerify: true }],
+      },
+    ],
+  };
   const update = { verificationCode: null, isVerify: true };
-  const user = await UserModel.findOneAndUpdate(filter, update, options);
-  console.log(user);
+  const user: any = await UserModel.findOneAndUpdate(filter, update, options);
 
-  user
-    ? (responseData.sucess = _responce.verificationSucess)
-    : (responseData.failed = _responce.verificationFailed);
-
+  if (user?.isVerify === true) {
+    responseData.sucess = _responce.verificationSucess;
+  } else {
+    responseData.failed = _responce.verificationFailed;
+  }
   return responseData;
 }
 
 export async function createLogin(input: Record<string, any>) {
+  // TODO: sign in with otp
   const responseData: any = {};
-  const loginWith = input.email
-    ? input.email
-    : input.phnNo
-    ? input.phnNo
-    : input.username;
-
-  const user: any = await UserModel.findOne({
-    $or: [{ email: loginWith }, { phnNo: loginWith }, { username: loginWith }],
-  });
-
-  if (!user) {
-    return (responseData.message = "Can not find account");
-  }
-
-  //TODO: shoud be implementing as a differenct function
-  const valid = await bcrypt
-    .compare(input.password, user.password)
-    .catch((e) => false);
-
-  if (valid) {
-    const login = await LoginModel.create({ user: user._id });
-
-    // create an access token
-    const accessToken = signJwt(
-      { ...user, session: login._id },
-      { expiresIn: config.get("accessTokenTtl") } // 15 minutes
+  if (input.phnNo) input.phnNo = "+880" + input.phnNo;
+  let user: any;
+  if (input.verificationCode) {
+    user = await UserModel.findOneAndUpdate(
+      {
+        $and: [
+          { phnNo: input.phnNo },
+          { verificationCode: input.verificationCode },
+        ],
+      },
+      { verificationCode: null },
+      { new: true }
     );
+  } else {
+    const loginWith = input.email
+      ? input.email
+      : input.phnNo
+      ? input.phnNo
+      : input.username;
 
-    // create a refresh token
-    const refreshToken = signJwt(
-      { ...user, session: login._id },
-      { expiresIn: config.get("refreshTokenTtl") } // 15 minutes
-    );
+    user = await UserModel.findOne({
+      $or: [
+        { email: loginWith },
+        { phnNo: loginWith },
+        { username: loginWith },
+      ],
+    });
 
-    if (accessToken && refreshToken) {
-      return (responseData.data = { accessToken, refreshToken });
+    //TODO: shoud be implementing as a differenct function
+    const valid = await bcrypt
+      .compare(input.password, user.password)
+      .catch((e) => false);
+    if (!valid) {
+      return (responseData.message = "Incorrect account or password");
     }
   }
 
-  return (responseData.message = "Incorrect account or password");
+  if (!user) {
+    return (responseData.message = "Wrong credentials.Please try again");
+  }
+
+  const login = await LoginModel.create({ user: user._id });
+
+  // create an access token
+  const accessToken = signJwt(
+    { ...user, session: login._id },
+    { expiresIn: config.get("accessTokenTtl") } // 15 minutes
+  );
+
+  // create a refresh token
+  const refreshToken = signJwt(
+    { ...user, session: login._id },
+    { expiresIn: config.get("refreshTokenTtl") } // 15 minutes
+  );
+
+  if (accessToken && refreshToken) {
+    return (responseData.data = { accessToken, refreshToken });
+  }
+  // }
+
+  // return (responseData.message = "Incorrect account or password");
 }
 
 export async function resendOtp(
   input: UpdateQuery<UserDocument>,
   options: QueryOptions
 ) {
+  if (input.phnNo) input.phnNo = "+880" + input.phnNo;
   const responseData: any = {};
-  let otp = "123457";
+  let otp = "123456";
 
   const otpSend = input.email ? input.email : input.phnNo;
   const filter = {
@@ -133,29 +140,8 @@ export async function resendOtp(
   // TODO: need to send code in mail
   user
     ? (responseData.verificationCode = user.verificationCode)
-    : (responseData.message = "Otp resend failed");
+    : (responseData.message = "Your credential may be wrong. Try again");
   return responseData;
-}
-
-export async function validatePassword({
-  email,
-  password,
-  phnNo,
-}: {
-  email: string;
-  password: string;
-  phnNo: string;
-}) {
-  const user = await UserModel.findOne({ $or: [{ email }, { phnNo }] });
-  if (!user) return false;
-  const inValid = await user.comparePassword(password);
-  if (!inValid) return false;
-
-  return omit(user.toJSON(), "password");
-}
-
-export async function findUser(query: FilterQuery<UserDocument>) {
-  return await UserModel.findOne(query).lean();
 }
 
 export async function resetPassword(
@@ -163,22 +149,25 @@ export async function resetPassword(
   options: QueryOptions
 ) {
   const responseData: any = {};
+  if (input.phnNo) input.phnNo = "+880" + input.phnNo;
   const hash = bcrypt.hashSync(
     input.password,
     await bcrypt.genSalt(config.get<number>("saltWorkFactor"))
   );
+
+  const resetPassWith = input.email ? input.email : input.phnNo;
   const filter = {
     $and: [
-      { $or: [{ email: input.email }, { phnNo: input.phnNo }] },
+      { $or: [{ email: resetPassWith }, { phnNo: resetPassWith }] },
       { isVerify: true },
     ],
   };
   const update = {
     verificationCode: null,
-    isVerify: true,
-    password: (input.password = hash),
+    password: hash,
   };
   const user = await UserModel.findOneAndUpdate(filter, update, options);
+
   user
     ? (responseData.data = true)
     : (responseData.message = _responce.passwordUpdateFailed);

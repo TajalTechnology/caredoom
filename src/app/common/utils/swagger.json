@@ -170,11 +170,11 @@
       "properties": {
         "email": {
           "type": "string",
-          "example": "mdtajalislam1189@gmail.com"
+          "example": "md@gmail.com"
         },
         "phnNo": {
           "type": "string",
-          "example": "01883950739"
+          "example": "1883950739"
         },
         "ownGender": {
           "type": "string",
@@ -193,11 +193,11 @@
       "properties": {
         "email": {
           "type": "string",
-          "example": "mdtajalislam1189@gmail.com"
+          "example": "md@gmail.com"
         },
         "phnNo": {
           "type": "string",
-          "example": "01883950739"
+          "example": "1883950739"
         },
         "verificationCode": {
           "type": "string",
@@ -210,15 +210,18 @@
       "properties": {
         "email": {
           "type": "string",
-          "example": "mdtajalislam1189@gmail.com"
+          "example": "md@gmail.com"
         },
         "phnNo": {
           "type": "string",
-          "example": "01883950739"
+          "example": "1883950739"
         },
         "password": {
           "type": "string",
-          "required": true,
+          "example": "123456"
+        },
+        "verificationCode": {
+          "type": "string",
           "example": "123456"
         },
         "isRemember": {
@@ -232,17 +235,18 @@
       "properties": {
         "email": {
           "type": "string",
-          "example": "mdtajalislam1189@gmail.com"
+          "example": "md@gmail.com"
         },
         "phnNo": {
           "type": "string",
-          "example": "01883950739"
+          "example": "1883950739"
         },
         "password": {
           "type": "string",
           "example": "123456",
           "required": true
         },
+
         "passwordConfirmation": {
           "type": "string",
           "examples": "123456"
@@ -258,11 +262,11 @@
       "properties": {
         "email": {
           "type": "string",
-          "example": "mdtajalislam1189@gmail.com"
+          "example": "md@gmail.com"
         },
         "phnNo": {
           "type": "string",
-          "example": "01883950739"
+          "example": "1883950739"
         }
       }
     }

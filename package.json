@@ -1,10 +1,11 @@
 {
   "name": "dynamic-form",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
+    "starts": "node server.ts",
     "builds": "tsc",
-    "build": "ts-node-dev --respawn --transpile-only server.ts --output public",
+    "start": "ts-node-dev --respawn --transpile-only server.ts --output public",
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
     "test": "jest"
   },

@@ -38,7 +38,7 @@ const _responce = {
   otpRequired: "Otp required!",
   otpLength: "Otp length should be 6 characters",
   userIdRequired: "Should be define user id",
-  verificationFailed: "Otp verification failed",
+  verificationFailed: "Incorrect verification code. Please try again later.",
   verificationSucess: "Otp Verified sucessfully",
   passwordUpdateFailed: "Password update failed",
 };

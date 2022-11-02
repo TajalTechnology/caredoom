@@ -32,7 +32,7 @@ const _responce = {
   passwordNotMatch: "Passwords do not match",
   invalidUsernamePassword: "Invalid user name or password",
   permissionDenied: "You are not authorized for this featured",
-  duplicateUser: "Please try a different email or cell phone number",
+  duplicateUser: "Cell phone number or email already in system",
 
   /*OTP*/
   otpRequired: "Otp required!",

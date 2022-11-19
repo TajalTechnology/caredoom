@@ -37,12 +37,15 @@ export async function verifyOTP(
 
   const responseData: any = {};
   const verifyWith = input.email ? input.email : input.phnNo;
+  console.log("Input:", input);
+
   const filter = {
     $and: [
       { $or: [{ email: verifyWith }, { phnNo: verifyWith }] },
-      {
-        $or: [{ verificationCode: input.verificationCode }, { isVerify: true }],
-      },
+      { verificationCode: input.verificationCode },
+      // {
+      //   $or: [{ verificationCode: input.verificationCode }, { isVerify: true }],
+      // },
     ],
   };
   const update = { verificationCode: null, isVerify: true };

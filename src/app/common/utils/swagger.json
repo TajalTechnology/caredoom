@@ -9,7 +9,7 @@
             "url": "https://opensource.org/licenses/MIT"
         }
     },
-    "host": "caredoom.onrender.com",
+    "host": "localhost:4000",
     "basePath": "/api",
     "tags": [
         {
@@ -29,7 +29,7 @@
             "description": "API for create a form with a form name And (extra column)"
         }
     ],
-    "schemes": ["https"],
+    "schemes": ["http"],
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "paths": {
@@ -139,6 +139,32 @@
         },
         "/users/resend_otp": {
             "put": {
+                "tags": ["Users"],
+                "summary": "Create new user in system",
+                "description": "Create new user in system",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "User that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/ResendModel"
+                        }
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                        "description": "New user is created",
+                        "schema": {
+                            "$ref": "#/definitions/ResendModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/delete": {
+            "delete": {
                 "tags": ["Users"],
                 "summary": "Create new user in system",
                 "description": "Create new user in system",

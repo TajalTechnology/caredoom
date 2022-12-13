@@ -1,16 +1,16 @@
 export default {
-  port: 3001,
-  saltWorkFactor: 10,
-  accessTokenTtl: "115m",
-  fileBasePath: "/home/taj/Desktop/Testing-Express-REST-API/uploads/",
-  refreshTokenTtl: "1y",
-  publicKey: `-----BEGIN PUBLIC KEY-----
+    port: 4000,
+    saltWorkFactor: 10,
+    accessTokenTtl: "115m",
+    fileBasePath: "/home/taj/Desktop/Testing-Express-REST-API/uploads/",
+    refreshTokenTtl: "1y",
+    publicKey: `-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCXzZerpx9qdaelwt1U7NCpWXQK
 km1OW4ohDF/7g01xDtYf8Nox9wzhhVQrFD+G4eaJoWxIhJYQTgT4ijMlpjXs07Mc
 wktcMX49h6Eoo6ZddOMl380UpivkaO+h80miG4JCFAM0G0pUoeNT8h6L9zHqr/yE
 oBRd3RAsqxeCKwKrswIDAQAB
 -----END PUBLIC KEY-----`,
-  privateKey: `-----BEGIN RSA PRIVATE KEY-----
+    privateKey: `-----BEGIN RSA PRIVATE KEY-----
 MIICXAIBAAKBgQCXzZerpx9qdaelwt1U7NCpWXQKkm1OW4ohDF/7g01xDtYf8Nox
 9wzhhVQrFD+G4eaJoWxIhJYQTgT4ijMlpjXs07McwktcMX49h6Eoo6ZddOMl380U
 pivkaO+h80miG4JCFAM0G0pUoeNT8h6L9zHqr/yEoBRd3RAsqxeCKwKrswIDAQAB

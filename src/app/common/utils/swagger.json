@@ -9,7 +9,7 @@
             "url": "https://opensource.org/licenses/MIT"
         }
     },
-    "host": "https://caredoom.onrender.com",
+    "host": "caredoom.onrender.com",
     "basePath": "/api",
     "tags": [
         {

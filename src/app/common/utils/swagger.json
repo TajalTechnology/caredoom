@@ -9,7 +9,7 @@
             "url": "https://opensource.org/licenses/MIT"
         }
     },
-    "host": "localhost:4000",
+    "host": "https://caredoom.onrender.com",
     "basePath": "/api",
     "tags": [
         {
@@ -29,7 +29,7 @@
             "description": "API for create a form with a form name And (extra column)"
         }
     ],
-    "schemes": ["http"],
+    "schemes": ["https"],
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "paths": {

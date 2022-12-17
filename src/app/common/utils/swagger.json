@@ -211,6 +211,26 @@
                     "type": "string",
                     "example": "Male",
                     "required": true
+                },
+                "providerName": {
+                    "type": "string",
+                    "example": "google"
+                },
+                "fristName": {
+                    "type": "string",
+                    "example": "Md Tajal Islam"
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Porage"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "Porage"
+                },
+                "photos": {
+                    "type": "string",
+                    "example": "phot live url"
                 }
             }
         },
@@ -242,6 +262,10 @@
                     "type": "string",
                     "example": "1883950739"
                 },
+                "username": {
+                    "type": "string",
+                    "example": "Porage"
+                },
                 "password": {
                     "type": "string",
                     "example": "123456"
@@ -269,7 +293,7 @@
                 },
                 "password": {
                     "type": "string",
-                    "example": "123456",
+                    "example": "123456 || 100572053886777088410",
                     "required": true
                 },
 

@@ -13,6 +13,10 @@ export interface UserInput {
     verificationCode: string;
     verifyTimeLimit: string;
     isRemember: boolean;
+    providerName: string;
+    photos: string;
+    fristName: string;
+    lastName: string;
 }
 
 export interface UserDocument extends UserInput, mongoose.Document {
@@ -33,6 +37,10 @@ const userSchema = new mongoose.Schema(
         verificationCode: { type: String, default: "123456" },
         isRemember: { type: Boolean, required: true, default: false },
         verifyTimeLimit: { type: Number, required: true, default: 60 },
+        providerName: { type: String },
+        photos: { type: String },
+        fristName: { type: String },
+        lastName: { type: String },
     },
     {
         timestamps: true,

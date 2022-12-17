@@ -37,7 +37,6 @@ export async function verifyOTP(
 
     const responseData: any = {};
     const verifyWith = input.email ? input.email : input.phnNo;
-    console.log("Input:", input);
 
     const filter = {
         $and: [
@@ -64,7 +63,7 @@ export async function createLogin(input: Record<string, any>) {
     const responseData: any = {};
     if (input.phnNo) input.phnNo = "+880" + input.phnNo;
     let user: any;
-    if (input.verificationCode) {
+    if (input.verificationCode && input.phnNo) {
         user = await UserModel.findOneAndUpdate(
             {
                 $and: [
@@ -153,6 +152,7 @@ export async function resetPassword(
 ) {
     const responseData: any = {};
     if (input.phnNo) input.phnNo = "+880" + input.phnNo;
+
     const hash = bcrypt.hashSync(
         input.password,
         await bcrypt.genSalt(config.get<number>("saltWorkFactor"))

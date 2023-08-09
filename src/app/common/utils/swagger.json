@@ -1,0 +1,113 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "REST API",
+        "description": "Data processing",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "",
+    "basePath": "/api",
+    "tags": [
+        {
+            "name": "Users",
+            "description": "API for users in the system"
+        }
+    ],
+    "schemes": ["https"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/users/registration": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Create new user and send code to user",
+                "description": "*Create user with phn or email \n *Response with verification code.Use this code to verify",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "User that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/UserModel"
+                        }
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                        "description": "New user is created",
+                        "schema": {
+                            "$ref": "#/definitions/UserModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login ",
+                "description": "Login and generate token",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "User that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/LoginModel"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New user is created",
+                        "schema": {
+                            "$ref": "#/definitions/UserModel"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "UserModel": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "example": "tajalislam"
+                },
+                "phnNo": {
+                    "type": "string",
+                    "example": "1883950739"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "tajalislam"
+                }
+            }
+        },
+        "LoginModel": {
+            "type": "object",
+            "properties": {
+                "phnNo": {
+                    "type": "string",
+                    "example": "1883950739"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "123456"
+                }
+            }
+        }
+    }
+}
